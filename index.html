@@ -1,646 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="description" content="RateDost PK - Pakistan ke Rates, Profit & Business Tools">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="RateDost PK - Pakistan ke Rates, Profit & Business Tools">
+<title>RateDost PK | Bilawal Khan Niazi</title>
 
-  <title>RateDost PK — Pakistan Rates & Business Tools</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com?v=1.0"></script>
-
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-
-    .glass {
-      background: rgba(255,255,255,.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .premium-shadow {
-      box-shadow:
-        0 10px 30px rgba(15, 23, 42, .07),
-        0 2px 8px rgba(15, 23, 42, .04);
-    }
-
-    .rate-card {
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-
-    .rate-card:hover {
-      transform: translateY(-3px);
-      box-shadow:
-        0 18px 35px rgba(15, 23, 42, .10),
-        0 3px 10px rgba(15, 23, 42, .04);
-    }
-
-    .nav-btn.active {
-      background: #0f172a;
-      color: white;
-    }
-
-    .category-btn.active {
-      background: #0f172a;
-      color: white;
-      border-color: #0f172a;
-    }
-
-    .modal {
-      display: none;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .toast {
-      transform: translateY(120px);
-      opacity: 0;
-      transition: all .3s ease;
-    }
-
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .number-input::-webkit-outer-spin-button,
-    .number-input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    .number-input {
-      -moz-appearance: textfield;
-    }
-
-    .loading {
-      animation: pulse 1.4s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%,100% { opacity: .55; }
-      50% { opacity: 1; }
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#f6f8fb;
+  color:#0f172a;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+button,input,select{font:inherit}
+.glass{
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px)
+}
+.shadow-premium{
+  box-shadow:0 12px 35px rgba(15,23,42,.07)
+}
+.card{
+  background:white;
+  border:1px solid #e8edf3;
+  border-radius:22px
+}
+.nav-active{
+  background:#0f172a!important;
+  color:white!important
+}
+.page{display:none}
+.page.active{display:block}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(2,6,23,.65);
+  align-items:center;
+  justify-content:center;
+  padding:16px
+}
+.modal.show{display:flex}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translate(-50%,120px);
+  opacity:0;
+  transition:.3s;
+  z-index:300;
+  background:#0f172a;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:700;
+  font-size:14px;
+  box-shadow:0 15px 35px rgba(0,0,0,.2)
+}
+.toast.show{
+  transform:translate(-50%,0);
+  opacity:1
+}
+.hide{display:none!important}
+.rate-card{transition:.2s}
+.rate-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(15,23,42,.1)
+}
+.category-active{
+  background:#0f172a!important;
+  color:white!important;
+  border-color:#0f172a!important
+}
+.admin-only{display:none}
+.admin-authenticated .admin-only{display:block}
+</style>
 </head>
 
 <body>
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
+<!-- ================= HEADER ================= -->
 
-<header class="sticky top-0 z-40 glass border-b border-slate-200">
-  <div class="max-w-7xl mx-auto px-4">
+<header class="sticky top-0 z-50 glass border-b border-slate-200">
 
-    <div class="h-16 flex items-center justify-between gap-3">
+<div class="max-w-7xl mx-auto px-4">
 
-      <button onclick="showPage('home')" class="flex items-center gap-2 min-w-0">
-        <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg">
-          <i class="fa-solid fa-chart-line"></i>
-        </div>
+<div class="h-16 flex items-center justify-between gap-3">
 
-        <div class="text-left">
-          <div class="font-black text-lg leading-none">
-            Rate<span class="text-emerald-600">Dost</span>
-          </div>
-          <div class="text-[10px] text-slate-500 font-semibold">
-            Pakistan Rates & Business Tools
-          </div>
-        </div>
-      </button>
+<button onclick="navigate('home')" class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center">
+<i class="fa-solid fa-chart-line"></i>
+</div>
 
-      <div class="hidden lg:flex items-center gap-1">
-        <button class="nav-btn active px-4 py-2 rounded-xl text-sm font-bold" data-page="home" onclick="showPage('home')">
-          <i class="fa-solid fa-house mr-1"></i> Home
-        </button>
+<div class="text-left">
+<div class="font-black text-lg">
+Rate<span class="text-emerald-600">Dost</span> PK
+</div>
+<div class="text-[10px] text-slate-500 font-bold">
+By Bilawal Khan Niazi
+</div>
+</div>
+</button>
 
-        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="government" onclick="showPage('government')">
-          <i class="fa-solid fa-building-columns mr-1"></i> Government
-        </button>
+<nav class="hidden lg:flex gap-1">
 
-        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="market" onclick="showPage('market')">
-          <i class="fa-solid fa-store mr-1"></i> Market
-        </button>
+<button data-nav="home" onclick="navigate('home')"
+class="nav-btn px-4 py-2 rounded-xl text-sm font-bold">
+<i class="fa-solid fa-house mr-1"></i> Home
+</button>
 
-        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="calculators" onclick="showPage('calculators')">
-          <i class="fa-solid fa-calculator mr-1"></i> Calculators
-        </button>
+<button data-nav="government" onclick="navigate('government')"
+class="nav-btn px-4 py-2 rounded-xl text-sm font-bold">
+<i class="fa-solid fa-building-columns mr-1"></i> Government Rates
+</button>
 
-        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="admin" onclick="showPage('admin')">
-          <i class="fa-solid fa-gear mr-1"></i> Admin
-        </button>
-      </div>
+<button data-nav="market" onclick="navigate('market')"
+class="nav-btn px-4 py-2 rounded-xl text-sm font-bold">
+<i class="fa-solid fa-store mr-1"></i> Market Rates
+</button>
 
-      <button
-        onclick="toggleMobileMenu()"
-        class="lg:hidden w-10 h-10 rounded-xl border border-slate-200 bg-white flex items-center justify-center"
-      >
-        <i class="fa-solid fa-bars"></i>
-      </button>
+<button data-nav="owner" onclick="navigate('owner')"
+class="nav-btn px-4 py-2 rounded-xl text-sm font-bold">
+<i class="fa-solid fa-crown mr-1"></i> Owner
+</button>
 
-    </div>
+</nav>
 
-    <div id="mobileMenu" class="hidden lg:hidden pb-3">
-      <div class="grid grid-cols-2 gap-2">
+<button onclick="toggleMobile()" class="lg:hidden w-10 h-10 rounded-xl border bg-white">
+<i class="fa-solid fa-bars"></i>
+</button>
 
-        <button class="nav-btn active p-3 rounded-xl text-sm font-bold" data-page="home" onclick="showPage('home'); toggleMobileMenu()">
-          <i class="fa-solid fa-house mr-1"></i> Home
-        </button>
+</div>
 
-        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="government" onclick="showPage('government'); toggleMobileMenu()">
-          <i class="fa-solid fa-building-columns mr-1"></i> Government
-        </button>
+<div id="mobileNav" class="hidden lg:hidden pb-3 grid grid-cols-2 gap-2">
 
-        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="market" onclick="showPage('market'); toggleMobileMenu()">
-          <i class="fa-solid fa-store mr-1"></i> Market
-        </button>
+<button data-nav="home" onclick="navigate('home');toggleMobile()" class="nav-btn p-3 rounded-xl bg-white font-bold">
+Home
+</button>
 
-        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="calculators" onclick="showPage('calculators'); toggleMobileMenu()">
-          <i class="fa-solid fa-calculator mr-1"></i> Calculators
-        </button>
+<button data-nav="government" onclick="navigate('government');toggleMobile()" class="nav-btn p-3 rounded-xl bg-white font-bold">
+Government
+</button>
 
-        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="admin" onclick="showPage('admin'); toggleMobileMenu()">
-          <i class="fa-solid fa-gear mr-1"></i> Admin
-        </button>
+<button data-nav="market" onclick="navigate('market');toggleMobile()" class="nav-btn p-3 rounded-xl bg-white font-bold">
+Market
+</button>
 
-      </div>
-    </div>
+<button data-nav="owner" onclick="navigate('owner');toggleMobile()" class="nav-btn p-3 rounded-xl bg-white font-bold">
+Owner
+</button>
 
-  </div>
+</div>
+
+</div>
 </header>
 
 
-<!-- =========================================================
-     MAIN
-========================================================= -->
+<!-- ================= MAIN ================= -->
 
 <main class="max-w-7xl mx-auto px-4 py-6">
 
-  <!-- HOME -->
-  <section id="page-home" class="page">
 
-    <div class="rounded-3xl bg-slate-950 text-white p-6 md:p-9 mb-6 overflow-hidden relative">
+<!-- ================= HOME ================= -->
 
-      <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-emerald-500/10"></div>
-      <div class="absolute -left-20 -bottom-32 w-72 h-72 rounded-full bg-blue-500/10"></div>
+<section id="page-home" class="page">
 
-      <div class="relative">
+<div class="rounded-[28px] bg-slate-950 text-white p-6 md:p-10 relative overflow-hidden mb-6">
 
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-bold mb-4">
-          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-          RateDost PK
-        </div>
+<div class="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-emerald-500/10"></div>
 
-        <h1 class="text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
-          Pakistan ke Rates,
-          <span class="text-emerald-400">Profit & Business Tools</span>
-        </h1>
+<div class="relative">
 
-        <p class="mt-3 text-slate-300 max-w-2xl">
-          Government aur market rates ko ek jagah check karein aur apne business ke liye useful calculators use karein.
-        </p>
+<div class="inline-flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 text-xs font-bold">
+<span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
+Pakistan Rates Platform
+</div>
 
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+<h1 class="text-3xl md:text-5xl font-black mt-5 max-w-3xl">
+Pakistan ke Rates,
+<span class="text-emerald-400">Profit & Business Tools</span>
+</h1>
 
-          <div class="relative flex-1">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+<p class="text-slate-300 mt-3 max-w-2xl">
+Government aur market rates ko ek jagah check karein.
+</p>
 
-            <input
-              id="globalSearch"
-              oninput="handleSearch()"
-              type="text"
-              placeholder="Search petrol, cement, sugar, wheat..."
-              class="w-full h-12 rounded-2xl bg-white text-slate-900 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/20"
-            >
-          </div>
+<div class="mt-6 relative max-w-2xl">
 
-          <button
-            onclick="clearSearch()"
-            class="h-12 px-5 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 font-bold"
-          >
-            Clear
-          </button>
+<i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400"></i>
 
-        </div>
+<input
+id="homeSearch"
+oninput="renderHome()"
+class="w-full h-13 py-4 rounded-2xl pl-11 pr-4 text-slate-900 outline-none"
+placeholder="Search petrol, cement, sugar, wheat..."
+>
 
-      </div>
-    </div>
+</div>
 
+</div>
+</div>
 
-    <!-- STATS -->
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<!-- STATS -->
 
-      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
-        <div class="text-xs text-slate-500 font-semibold">Total Rates</div>
-        <div id="statTotal" class="text-2xl font-black mt-1">0</div>
-      </div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
 
-      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
-        <div class="text-xs text-slate-500 font-semibold">Government</div>
-        <div id="statGovernment" class="text-2xl font-black mt-1">0</div>
-      </div>
+<div class="card shadow-premium p-4">
+<div class="text-xs text-slate-500 font-bold">Total Rates</div>
+<div id="totalRates" class="text-2xl font-black mt-1">0</div>
+</div>
 
-      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
-        <div class="text-xs text-slate-500 font-semibold">Market</div>
-        <div id="statMarket" class="text-2xl font-black mt-1">0</div>
-      </div>
+<div class="card shadow-premium p-4">
+<div class="text-xs text-slate-500 font-bold">Government</div>
+<div id="governmentCount" class="text-2xl font-black mt-1">0</div>
+</div>
 
-      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
-        <div class="text-xs text-slate-500 font-semibold">Last Updated</div>
-        <div id="statUpdated" class="text-sm font-black mt-2">--</div>
-      </div>
+<div class="card shadow-premium p-4">
+<div class="text-xs text-slate-500 font-bold">Market</div>
+<div id="marketCount" class="text-2xl font-black mt-1">0</div>
+</div>
 
-    </div>
+<div class="card shadow-premium p-4">
+<div class="text-xs text-slate-500 font-bold">Updated</div>
+<div id="lastUpdated" class="text-sm font-black mt-2">—</div>
+</div>
 
+</div>
 
-    <!-- ALL DAILY LISTINGS -->
 
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4">
+<!-- LISTINGS -->
 
-      <div>
-        <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-          Daily Market Dashboard
-        </div>
+<div class="flex items-end justify-between mb-4">
 
-        <h2 class="text-2xl font-black mt-1">
-          All Daily Listings
-        </h2>
+<div>
+<div class="text-xs uppercase tracking-wider font-black text-emerald-600">
+Daily Dashboard
+</div>
+<h2 class="text-2xl font-black">
+All Daily Listings
+</h2>
+<p class="text-sm text-slate-500">
+Government vs Market Rates
+</p>
+</div>
 
-        <p class="text-sm text-slate-500 mt-1">
-          Govt vs Market Rates
-        </p>
-      </div>
+</div>
 
-      <div class="flex gap-2">
-        <button
-          onclick="showPage('government')"
-          class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-bold"
-        >
-          Government
-        </button>
+<div id="homeGrid"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+</div>
 
-        <button
-          onclick="showPage('market')"
-          class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold"
-        >
-          Market
-        </button>
-      </div>
 
-    </div>
+<!-- PUBLIC BUSINESS TOOLS -->
 
+<div class="mt-10">
 
-    <!-- SEARCH RESULT MESSAGE -->
+<div class="mb-4">
+<div class="text-xs uppercase font-black text-blue-600">
+Useful Tools
+</div>
+<h2 class="text-2xl font-black">
+Business Tools
+</h2>
+<p class="text-sm text-slate-500">
+Popular calculators for daily business decisions.
+</p>
+</div>
 
-    <div id="searchInfo" class="hidden mb-4 rounded-2xl bg-blue-50 border border-blue-100 p-4 text-sm text-blue-800"></div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
 
+<div class="card p-5">
+<i class="fa-solid fa-chart-pie text-emerald-600 text-xl"></i>
+<div class="font-black mt-3">Profit</div>
+<div class="text-xs text-slate-500 mt-1">Business profit calculator</div>
+</div>
 
-    <!-- HOME GRID -->
+<div class="card p-5">
+<i class="fa-solid fa-percent text-blue-600 text-xl"></i>
+<div class="font-black mt-3">Margin</div>
+<div class="text-xs text-slate-500 mt-1">Margin calculation</div>
+</div>
 
-    <div
-      id="homeGrid"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-    ></div>
+<div class="card p-5">
+<i class="fa-solid fa-tag text-purple-600 text-xl"></i>
+<div class="font-black mt-3">Discount</div>
+<div class="text-xs text-slate-500 mt-1">Discount calculation</div>
+</div>
 
+<div class="card p-5">
+<i class="fa-solid fa-money-bill-transfer text-orange-600 text-xl"></i>
+<div class="font-black mt-3">Currency</div>
+<div class="text-xs text-slate-500 mt-1">Currency conversion</div>
+</div>
 
-    <!-- QUICK CALCULATORS -->
+</div>
+</div>
 
-    <div class="mt-8">
+</section>
 
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <div class="text-xs font-bold text-emerald-600 uppercase">Business Tools</div>
-          <h2 class="text-2xl font-black">Quick Calculators</h2>
-        </div>
 
-        <button onclick="showPage('calculators')" class="text-sm font-bold text-emerald-600">
-          View All →
-        </button>
-      </div>
+<!-- ================= GOVERNMENT ================= -->
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<section id="page-government" class="page">
 
-        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('profit'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
-          <i class="fa-solid fa-chart-pie text-emerald-600 text-xl"></i>
-          <div class="font-black mt-3">Profit</div>
-          <div class="text-xs text-slate-500 mt-1">Calculate profit</div>
-        </button>
+<div class="mb-6">
+<div class="text-xs uppercase font-black text-emerald-600">
+Official Rates
+</div>
 
-        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('margin'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
-          <i class="fa-solid fa-percent text-blue-600 text-xl"></i>
-          <div class="font-black mt-3">Margin</div>
-          <div class="text-xs text-slate-500 mt-1">Retail margin</div>
-        </button>
+<h1 class="text-3xl font-black">
+Government Rates
+</h1>
 
-        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('discount'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
-          <i class="fa-solid fa-tag text-purple-600 text-xl"></i>
-          <div class="font-black mt-3">Discount</div>
-          <div class="text-xs text-slate-500 mt-1">Find sale price</div>
-        </button>
+<p class="text-slate-500 mt-1">
+Category-wise government/official rate listings.
+</p>
+</div>
 
-        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('currency'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
-          <i class="fa-solid fa-money-bill-transfer text-orange-600 text-xl"></i>
-          <div class="font-black mt-3">Currency</div>
-          <div class="text-xs text-slate-500 mt-1">PKR calculator</div>
-        </button>
+<div id="govCategories"
+class="flex gap-2 overflow-x-auto pb-3 mb-5">
+</div>
 
-      </div>
+<div id="governmentGrid"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+</div>
 
-    </div>
+</section>
 
-  </section>
 
+<!-- ================= MARKET ================= -->
 
-  <!-- GOVERNMENT -->
-
-  <section id="page-government" class="page hidden">
-
-    <div class="mb-6">
-
-      <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-        Official / Government
-      </div>
-
-      <h1 class="text-3xl font-black mt-1">
-        Government Rates
-      </h1>
-
-      <p class="text-slate-500 mt-1">
-        Category-wise official rates and notifications.
-      </p>
-
-    </div>
-
-
-    <div id="governmentCategories" class="flex gap-2 overflow-x-auto pb-3 mb-5"></div>
-
-    <div
-      id="governmentGrid"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-    ></div>
-
-  </section>
-
-
-  <!-- MARKET -->
-
-  <section id="page-market" class="page hidden">
-
-    <div class="mb-6">
-
-      <div class="text-xs font-bold text-blue-600 uppercase tracking-wider">
-        Local Market
-      </div>
-
-      <h1 class="text-3xl font-black mt-1">
-        Market Rates
-      </h1>
-
-      <p class="text-slate-500 mt-1">
-        Current market prices and government comparison.
-      </p>
-
-    </div>
-
-    <div class="mb-5 flex flex-col sm:flex-row gap-3">
-
-      <div class="relative flex-1">
-        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-
-        <input
-          id="marketSearch"
-          oninput="renderMarket()"
-          class="w-full h-12 bg-white border border-slate-200 rounded-2xl pl-11 pr-4 outline-none focus:ring-4 focus:ring-blue-500/10"
-          placeholder="Search market rates..."
-        >
-      </div>
-
-      <select
-        id="marketCategory"
-        onchange="renderMarket()"
-        class="h-12 bg-white border border-slate-200 rounded-2xl px-4 font-semibold outline-none"
-      >
-        <option value="all">All Categories</option>
-      </select>
-
-    </div>
-
-    <div id="marketGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-  </section>
-
-
-  <!-- CALCULATORS -->
-
-  <section id="page-calculators" class="page hidden">
-
-    <div class="mb-6">
-
-      <div class="text-xs font-bold text-purple-600 uppercase tracking-wider">
-        Business Tools
-      </div>
-
-      <h1 class="text-3xl font-black mt-1">
-        Calculators
-      </h1>
-
-      <p class="text-slate-500 mt-1">
-        Fast calculations for your daily business decisions.
-      </p>
-
-    </div>
-
-
-    <div class="grid lg:grid-cols-3 gap-5">
-
-      <div class="lg:col-span-1 space-y-2">
-
-        <button onclick="selectCalculator('profit')" data-calc="profit" class="calc-btn w-full text-left p-4 rounded-2xl bg-slate-900 text-white font-bold">
-          <i class="fa-solid fa-chart-pie mr-2"></i> Profit Calculator
-        </button>
-
-        <button onclick="selectCalculator('margin')" data-calc="margin" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
-          <i class="fa-solid fa-percent mr-2"></i> Margin Calculator
-        </button>
-
-        <button onclick="selectCalculator('discount')" data-calc="discount" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
-          <i class="fa-solid fa-tag mr-2"></i> Discount Calculator
-        </button>
-
-        <button onclick="selectCalculator('currency')" data-calc="currency" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
-          <i class="fa-solid fa-money-bill-transfer mr-2"></i> Currency Calculator
-        </button>
-
-      </div>
-
-
-      <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 premium-shadow p-5 md:p-7">
-
-        <div id="calculatorContent"></div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ADMIN -->
-
-  <section id="page-admin" class="page hidden">
-
-    <div class="mb-6">
-
-      <div class="text-xs font-bold text-orange-600 uppercase tracking-wider">
-        Control Center
-      </div>
-
-      <h1 class="text-3xl font-black mt-1">
-        Admin Panel
-      </h1>
-
-      <p class="text-slate-500 mt-1">
-        Manage rates without editing GitHub code.
-      </p>
-
-    </div>
-
-
-    <!-- ADMIN STATS -->
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-
-      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
-        <div class="text-xs text-slate-500">Total Items</div>
-        <div id="adminTotal" class="text-2xl font-black mt-1">0</div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
-        <div class="text-xs text-slate-500">Categories</div>
-        <div id="adminCategories" class="text-2xl font-black mt-1">0</div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
-        <div class="text-xs text-slate-500">Featured</div>
-        <div id="adminFeatured" class="text-2xl font-black mt-1">0</div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
-        <div class="text-xs text-slate-500">Data Status</div>
-        <div class="text-sm font-black text-emerald-600 mt-2">
-          <i class="fa-solid fa-circle-check mr-1"></i> Saved
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- ADMIN ACTIONS -->
-
-    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
-
-      <button onclick="openRateModal()" class="p-4 rounded-2xl bg-slate-900 text-white text-left font-bold">
-        <i class="fa-solid fa-plus mr-2"></i>
-        Add Rate
-      </button>
-
-      <button onclick="exportData()" class="p-4 rounded-2xl bg-white border border-slate-200 text-left font-bold">
-        <i class="fa-solid fa-download mr-2"></i>
-        Export Data
-      </button>
-
-      <label class="p-4 rounded-2xl bg-white border border-slate-200 text-left font-bold cursor-pointer">
-        <i class="fa-solid fa-upload mr-2"></i>
-        Import Data
-        <input id="importFile" type="file" accept=".json" onchange="importData(event)" class="hidden">
-      </label>
-
-      <button onclick="resetDemoData()" class="p-4 rounded-2xl bg-red-50 border border-red-100 text-red-700 text-left font-bold">
-        <i class="fa-solid fa-rotate-left mr-2"></i>
-        Reset Demo Data
-      </button>
-
-    </div>
-
-
-    <!-- AI ASSISTANT -->
-
-    <div class="bg-gradient-to-br from-slate-950 to-slate-800 text-white rounded-3xl p-5 md:p-7 mb-6">
-
-      <div class="flex items-start gap-4">
-
-        <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center flex-shrink-0">
-          <i class="fa-solid fa-robot text-xl"></i>
-        </div>
-
-        <div class="flex-1">
-
-          <h2 class="text-xl font-black">
-            RateDost AI Assistant
-          </h2>
-
-          <p class="text-sm text-slate-300 mt-1">
-            Future-ready assistant for rate verification and management.
-          </p>
-
-          <div class="mt-4 flex flex-col sm:flex-row gap-2">
-
-            <input
-              id="aiCommand"
-              class="flex-1 h-11 rounded-xl bg-white/10 border border-white/10 px-4 outline-none placeholder:text-slate-400"
-              placeholder="e.g. Check today's government rates"
-            >
-
-            <button onclick="runAICommand()" class="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black">
-              Run
-            </button>
-
-          </div>
-
-          <div id="aiResult" class="mt-4 hidden rounded-xl bg-white/5 border border-white/10 p-4 text-sm"></div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- RATE TABLE -->
-
-    <div class="bg-white rounded-3xl border border-slate-100 premium-shadow overflow-hidden">
-
-      <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
-
-        <div>
-          <h2 class="font-black text-xl">Rate Management</h2>
-          <p class="text-sm text-slate-500">Add, edit or remove your rates.</p>
-        </div>
-
-        <input
-          id="admi
+<section id="page-market
