@@ -1,321 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RateDost PK | Pakistan Daily Rates & Business Tools</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="RateDost PK - Pakistan ke Rates, Profit & Business Tools">
+
+  <title>RateDost PK — Pakistan Rates & Business Tools</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?v=1.0"></script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .glass {
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .premium-shadow {
+      box-shadow:
+        0 10px 30px rgba(15, 23, 42, .07),
+        0 2px 8px rgba(15, 23, 42, .04);
+    }
+
+    .rate-card {
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .rate-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 18px 35px rgba(15, 23, 42, .10),
+        0 3px 10px rgba(15, 23, 42, .04);
+    }
+
+    .nav-btn.active {
+      background: #0f172a;
+      color: white;
+    }
+
+    .category-btn.active {
+      background: #0f172a;
+      color: white;
+      border-color: #0f172a;
+    }
+
+    .modal {
+      display: none;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .toast {
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all .3s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .number-input::-webkit-outer-spin-button,
+    .number-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .number-input {
+      -moz-appearance: textfield;
+    }
+
+    .loading {
+      animation: pulse 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: .55; }
+      50% { opacity: 1; }
+    }
+  </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col justify-between font-sans text-slate-800">
 
-    <!-- Header -->
-    <header class="bg-emerald-950 text-white shadow-lg sticky top-0 z-50 border-b border-emerald-900">
-        <div class="max-w-7xl mx-auto px-3 py-2.5 flex justify-between items-center">
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchTab('home')">
-                <div class="bg-amber-400 text-emerald-950 font-black px-2.5 py-1 rounded-lg text-sm shadow-md">RD</div>
-                <div>
-                    <h1 class="text-xs md:text-sm font-black tracking-wider">RATEDOST <span class="text-[9px] bg-red-600 px-1 rounded text-white">PK</span></h1>
-                    <p class="text-[9px] text-emerald-200">Owner: <span class="text-amber-300 font-bold">Bilawal Khan Niazi</span></p>
-                </div>
-            </div>
-            
-            <nav class="flex items-center space-x-1 text-[10px] md:text-[11px] font-bold overflow-x-auto py-1">
-                <button onclick="switchTab('home')" class="bg-emerald-900 px-2.5 py-1.5 rounded-lg text-amber-300 hover:bg-emerald-800 transition">Home</button>
-                <button onclick="switchTab('govt')" class="bg-emerald-900 px-2.5 py-1.5 rounded-lg text-amber-300 hover:bg-emerald-800 transition">Govt Rates</button>
-                <button onclick="switchTab('market')" class="bg-emerald-900 px-2.5 py-1.5 rounded-lg text-amber-300 hover:bg-emerald-800 transition">Market Rates</button>
-                <button onclick="switchTab('calculators')" class="bg-emerald-900 px-2.5 py-1.5 rounded-lg text-amber-300 hover:bg-emerald-800 transition">Calculators</button>
-            </nav>
+<body>
 
-            <div>
-                <button onclick="openAdminLogin()" class="text-[10px] text-emerald-950 bg-amber-400 px-2.5 py-1.5 rounded-lg font-black shadow hover:bg-amber-300 transition">
-                    <i class="fas fa-shield-alt mr-0.5"></i> Admin
-                </button>
-            </div>
-        </div>
-    </header>
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow">
-        
-        <!-- HOME VIEW -->
-        <div id="home-view" class="view-section space-y-6">
-            <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 p-4 rounded-2xl shadow-md font-bold flex items-center justify-between gap-4">
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-bullhorn text-xl"></i>
-                    <span>Khush Khabri! Mianwali, Chiniot aur tamam shehron ke sarkari aur market rates ab barwaqt dastiyab hain.</span>
-                </div>
-            </div>
+<header class="sticky top-0 z-40 glass border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4">
 
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-3 w-full md:w-auto">
-                    <div class="bg-emerald-100 p-2.5 rounded-xl text-emerald-800"><i class="fas fa-map-marker-alt"></i></div>
-                    <div>
-                        <label class="block text-[10px] uppercase font-bold text-gray-400">Select Your City</label>
-                        <select id="city-selector" onchange="renderMainGrid()" class="font-bold text-emerald-950 bg-transparent outline-none text-base cursor-pointer">
-                            <option value="Mianwali">Mianwali</option>
-                            <option value="Chiniot">Chiniot</option>
-                            <option value="Lahore">Lahore</option>
-                            <option value="Islamabad">Islamabad</option>
-                            <option value="Faisalabad">Faisalabad</option>
-                        </select>
-                    </div>
-                </div>
+    <div class="h-16 flex items-center justify-between gap-3">
 
-                <div class="relative w-full md:w-80">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><i class="fas fa-search text-xs"></i></span>
-                    <input type="text" id="search-box" oninput="renderMainGrid()" placeholder="Search petrol, gold, sabzi, cement..." class="w-full bg-slate-50 border border-slate-200 pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-600">
-                </div>
-            </div>
-
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="font-black text-emerald-950 text-base md:text-lg"><i class="fas fa-list-alt text-emerald-700 mr-2"></i> All Daily Listings (Govt vs Market Rates)</h2>
-                    <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-lg">Live Active</span>
-                </div>
-                <!-- GRID CONTAINER WHERE ITEMS WILL APPEAR -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="rates-grid"></div>
-            </div>
+      <button onclick="showPage('home')" class="flex items-center gap-2 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg">
+          <i class="fa-solid fa-chart-line"></i>
         </div>
 
-        <!-- GOVT RATES VIEW -->
-        <div id="govt-view" class="view-section hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-landmark text-emerald-700 mr-2"></i> Official Government Rates Portal</h2>
-                <p class="text-xs text-gray-500 mb-6">Food, Construction, Fuel aur tamam sarkari approved rates.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="govt-rates-grid"></div>
-            </div>
+        <div class="text-left">
+          <div class="font-black text-lg leading-none">
+            Rate<span class="text-emerald-600">Dost</span>
+          </div>
+          <div class="text-[10px] text-slate-500 font-semibold">
+            Pakistan Rates & Business Tools
+          </div>
+        </div>
+      </button>
+
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-btn active px-4 py-2 rounded-xl text-sm font-bold" data-page="home" onclick="showPage('home')">
+          <i class="fa-solid fa-house mr-1"></i> Home
+        </button>
+
+        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="government" onclick="showPage('government')">
+          <i class="fa-solid fa-building-columns mr-1"></i> Government
+        </button>
+
+        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="market" onclick="showPage('market')">
+          <i class="fa-solid fa-store mr-1"></i> Market
+        </button>
+
+        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="calculators" onclick="showPage('calculators')">
+          <i class="fa-solid fa-calculator mr-1"></i> Calculators
+        </button>
+
+        <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold" data-page="admin" onclick="showPage('admin')">
+          <i class="fa-solid fa-gear mr-1"></i> Admin
+        </button>
+      </div>
+
+      <button
+        onclick="toggleMobileMenu()"
+        class="lg:hidden w-10 h-10 rounded-xl border border-slate-200 bg-white flex items-center justify-center"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden pb-3">
+      <div class="grid grid-cols-2 gap-2">
+
+        <button class="nav-btn active p-3 rounded-xl text-sm font-bold" data-page="home" onclick="showPage('home'); toggleMobileMenu()">
+          <i class="fa-solid fa-house mr-1"></i> Home
+        </button>
+
+        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="government" onclick="showPage('government'); toggleMobileMenu()">
+          <i class="fa-solid fa-building-columns mr-1"></i> Government
+        </button>
+
+        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="market" onclick="showPage('market'); toggleMobileMenu()">
+          <i class="fa-solid fa-store mr-1"></i> Market
+        </button>
+
+        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="calculators" onclick="showPage('calculators'); toggleMobileMenu()">
+          <i class="fa-solid fa-calculator mr-1"></i> Calculators
+        </button>
+
+        <button class="nav-btn p-3 rounded-xl text-sm font-bold" data-page="admin" onclick="showPage('admin'); toggleMobileMenu()">
+          <i class="fa-solid fa-gear mr-1"></i> Admin
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="max-w-7xl mx-auto px-4 py-6">
+
+  <!-- HOME -->
+  <section id="page-home" class="page">
+
+    <div class="rounded-3xl bg-slate-950 text-white p-6 md:p-9 mb-6 overflow-hidden relative">
+
+      <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-emerald-500/10"></div>
+      <div class="absolute -left-20 -bottom-32 w-72 h-72 rounded-full bg-blue-500/10"></div>
+
+      <div class="relative">
+
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-bold mb-4">
+          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+          RateDost PK
         </div>
 
-        <!-- MARKET RATES VIEW -->
-        <div id="market-view" class="view-section hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-store text-amber-600 mr-2"></i> Open Market Wholesale Rates</h2>
-                <p class="text-xs text-gray-500 mb-6">Aam bazaar aur wholesale market ke real-time rates.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="market-rates-grid"></div>
-            </div>
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
+          Pakistan ke Rates,
+          <span class="text-emerald-400">Profit & Business Tools</span>
+        </h1>
+
+        <p class="mt-3 text-slate-300 max-w-2xl">
+          Government aur market rates ko ek jagah check karein aur apne business ke liye useful calculators use karein.
+        </p>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+            <input
+              id="globalSearch"
+              oninput="handleSearch()"
+              type="text"
+              placeholder="Search petrol, cement, sugar, wheat..."
+              class="w-full h-12 rounded-2xl bg-white text-slate-900 pl-11 pr-4 outline-none focus:ring-4 focus:ring-emerald-500/20"
+            >
+          </div>
+
+          <button
+            onclick="clearSearch()"
+            class="h-12 px-5 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 font-bold"
+          >
+            Clear
+          </button>
+
         </div>
 
-        <!-- CALCULATORS VIEW -->
-        <div id="calculators-view" class="view-section hidden space-y-6 max-w-3xl mx-auto">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-calculator text-emerald-700 mr-2"></i> Business Profit Calculator</h2>
-                <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input type="number" id="calc-price" placeholder="Selling Price (Rs)" class="p-2.5 border rounded-lg text-sm bg-white">
-                        <input type="number" id="calc-cost" placeholder="Product Cost (Rs)" class="p-2.5 border rounded-lg text-sm bg-white">
-                    </div>
-                    <button onclick="calculateProfit()" class="bg-emerald-900 text-white text-xs font-bold px-4 py-2 rounded-lg">Calculate Net Profit</button>
-                    <p id="calc-result" class="text-xs font-bold text-emerald-950 mt-2"></p>
-                </div>
-            </div>
+      </div>
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+
+      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
+        <div class="text-xs text-slate-500 font-semibold">Total Rates</div>
+        <div id="statTotal" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
+        <div class="text-xs text-slate-500 font-semibold">Government</div>
+        <div id="statGovernment" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
+        <div class="text-xs text-slate-500 font-semibold">Market</div>
+        <div id="statMarket" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 premium-shadow border border-slate-100">
+        <div class="text-xs text-slate-500 font-semibold">Last Updated</div>
+        <div id="statUpdated" class="text-sm font-black mt-2">--</div>
+      </div>
+
+    </div>
+
+
+    <!-- ALL DAILY LISTINGS -->
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-4">
+
+      <div>
+        <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+          Daily Market Dashboard
         </div>
 
-        <!-- ADMIN VIEW -->
-        <div id="admin-view" class="view-section hidden max-w-4xl mx-auto py-2">
-            <div id="admin-login-box" class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200 text-center max-w-md mx-auto">
-                <h3 class="font-black text-xl text-slate-900 mb-2">VIP Admin Verification</h3>
-                <p class="text-xs text-slate-500 mb-6">Bilawal Khan Niazi Only</p>
-                <input type="password" id="vip-secret-input" placeholder="Enter Secure Password" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-center text-sm mb-4 outline-none">
-                <button onclick="verifyVIPAccess()" class="w-full bg-emerald-950 text-white py-3.5 rounded-xl font-bold text-sm shadow-lg">Access Panel</button>
-                <button onclick="switchTab('home')" class="mt-3 text-xs text-gray-500 hover:underline">← Back to Website</button>
-                <p id="error-msg" class="text-red-500 text-xs mt-3 hidden font-bold">Ghalt Password!</p>
-            </div>
+        <h2 class="text-2xl font-black mt-1">
+          All Daily Listings
+        </h2>
 
-            <div id="admin-dashboard-box" class="hidden bg-white p-6 rounded-3xl shadow-xl border border-slate-200 space-y-6">
-                <div class="flex justify-between items-center border-b pb-4">
-                    <h2 class="font-black text-emerald-950 text-lg">Master Admin Panel</h2>
-                    <button onclick="switchTab('home')" class="bg-slate-100 text-slate-700 text-xs px-4 py-2 rounded-xl font-bold">Exit</button>
-                </div>
-                <div class="bg-slate-50 p-4 rounded-2xl border space-y-3">
-                    <h3 class="font-bold text-slate-900 text-sm">Add New Item</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-                        <input type="text" id="admin-item-name" placeholder="Item Name" class="border bg-white p-2.5 rounded-xl text-xs">
-                        <select id="admin-category" class="border bg-white p-2.5 rounded-xl text-xs font-bold">
-                            <option value="Food">Food & Grocery</option>
-                            <option value="Vegetables">Vegetables</option>
-                            <option value="Construction">Construction</option>
-                            <option value="Fuel">Fuel</option>
-                            <option value="Gold">Gold</option>
-                        </select>
-                        <input type="number" id="admin-govt-rate" placeholder="Govt Rate" class="border bg-white p-2.5 rounded-xl text-xs">
-                        <input type="number" id="admin-market-rate" placeholder="Market Rate" class="border bg-white p-2.5 rounded-xl text-xs">
-                    </div>
-                    <button onclick="addNewRateAdmin()" class="bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs">Publish</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead><tr class="bg-slate-100 border-b"><th class="p-3">Name</th><th class="p-3">Category</th><th class="p-3">Govt</th><th class="p-3">Market</th><th class="p-3 text-right">Action</th></tr></thead>
-                        <tbody id="admin-table-body"></tbody>
-                    </table>
-                </div>
-            </div>
+        <p class="text-sm text-slate-500 mt-1">
+          Govt vs Market Rates
+        </p>
+      </div>
+
+      <div class="flex gap-2">
+        <button
+          onclick="showPage('government')"
+          class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-bold"
+        >
+          Government
+        </button>
+
+        <button
+          onclick="showPage('market')"
+          class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold"
+        >
+          Market
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- SEARCH RESULT MESSAGE -->
+
+    <div id="searchInfo" class="hidden mb-4 rounded-2xl bg-blue-50 border border-blue-100 p-4 text-sm text-blue-800"></div>
+
+
+    <!-- HOME GRID -->
+
+    <div
+      id="homeGrid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+    ></div>
+
+
+    <!-- QUICK CALCULATORS -->
+
+    <div class="mt-8">
+
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="text-xs font-bold text-emerald-600 uppercase">Business Tools</div>
+          <h2 class="text-2xl font-black">Quick Calculators</h2>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-center py-6 text-xs mt-12">
-        <p>© 2026 RateDost PK. Developed by Bilawal Khan Niazi</p>
-    </footer>
+        <button onclick="showPage('calculators')" class="text-sm font-bold text-emerald-600">
+          View All →
+        </button>
+      </div>
 
-    <!-- Script Logic -->
-    <script>
-        const SECURE_ADMIN_PASS = "Khan123$$$M";
-        
-        let defaultRates = [
-            { id: 1, name: "Petrol (Super)", category: "Fuel", govt: 279.75, market: 279.75, unit: "Liter" },
-            { id: 2, name: "High Speed Diesel", category: "Fuel", govt: 284.10, market: 284.10, unit: "Liter" },
-            { id: 3, name: "Gold (24K)", category: "Gold", govt: 242500, market: 243000, unit: "Tola" },
-            { id: 4, name: "Cement Bag (50kg)", category: "Construction", govt: 1350, market: 1380, unit: "Bag" },
-            { id: 5, name: "Saria Grade 60", category: "Construction", govt: 265000, market: 270000, unit: "Ton" },
-            { id: 6, name: "Potato (Aaloo)", category: "Vegetables", govt: 75, market: 90, unit: "Kg" },
-            { id: 7, name: "Onion (Pyaaz)", category: "Vegetables", govt: 110, market: 130, unit: "Kg" },
-            { id: 8, name: "Tomato (Tamatar)", category: "Vegetables", govt: 100, market: 120, unit: "Kg" },
-            { id: 9, name: "Sugar (Cheeni)", category: "Food", govt: 140, market: 145, unit: "Kg" },
-            { id: 10, name: "Cooking Oil (Dalda)", category: "Food", govt: 550, market: 570, unit: "Liter" },
-            { id: 11, name: "Wheat Flour (Atta 20kg)", category: "Food", govt: 2800, market: 2850, unit: "Bag" },
-            { id: 12, name: "Daal Chana", category: "Food", govt: 280, market: 300, unit: "Kg" }
-        ];
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-        let allRates = defaultRates;
-        try {
-            let saved = localStorage.getItem('ratedost_items_v2');
-            if (saved) {
-                allRates = JSON.parse(saved);
-            }
-        } catch(e) {
-            allRates = defaultRates;
-        }
+        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('profit'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
+          <i class="fa-solid fa-chart-pie text-emerald-600 text-xl"></i>
+          <div class="font-black mt-3">Profit</div>
+          <div class="text-xs text-slate-500 mt-1">Calculate profit</div>
+        </button>
 
-        function switchTab(tab) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            if(tab === 'home') {
-                document.getElementById('home-view').classList.remove('hidden');
-                renderMainGrid();
-            } else if(tab === 'govt') {
-                document.getElementById('govt-view').classList.remove('hidden');
-                renderGovtGrid();
-            } else if(tab === 'market') {
-                document.getElementById('market-view').classList.remove('hidden');
-                renderMarketGrid();
-            } else if(tab === 'calculators') {
-                document.getElementById('calculators-view').classList.remove('hidden');
-            }
-        }
+        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('margin'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
+          <i class="fa-solid fa-percent text-blue-600 text-xl"></i>
+          <div class="font-black mt-3">Margin</div>
+          <div class="text-xs text-slate-500 mt-1">Retail margin</div>
+        </button>
 
-        function openAdminLogin() {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('admin-view').classList.remove('hidden');
-            document.getElementById('admin-login-box').classList.remove('hidden');
-            document.getElementById('admin-dashboard-box').classList.add('hidden');
-        }
+        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('discount'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
+          <i class="fa-solid fa-tag text-purple-600 text-xl"></i>
+          <div class="font-black mt-3">Discount</div>
+          <div class="text-xs text-slate-500 mt-1">Find sale price</div>
+        </button>
 
-        function verifyVIPAccess() {
-            const pass = document.getElementById('vip-secret-input').value;
-            if(pass === SECURE_ADMIN_PASS) {
-                document.getElementById('admin-login-box').classList.add('hidden');
-                document.getElementById('admin-dashboard-box').classList.remove('hidden');
-                document.getElementById('error-msg').classList.add('hidden');
-                renderAdminTable();
-            } else {
-                document.getElementById('error-msg').classList.remove('hidden');
-            }
-        }
+        <button onclick="showPage('calculators'); setTimeout(()=>selectCalculator('currency'),100)" class="bg-white p-5 rounded-2xl border border-slate-100 premium-shadow text-left">
+          <i class="fa-solid fa-money-bill-transfer text-orange-600 text-xl"></i>
+          <div class="font-black mt-3">Currency</div>
+          <div class="text-xs text-slate-500 mt-1">PKR calculator</div>
+        </button>
 
-        function renderMainGrid() {
-            const searchInput = document.getElementById('search-box');
-            const citySelector = document.getElementById('city-selector');
-            const grid = document.getElementById('rates-grid');
-            
-            if(!grid) return;
+      </div>
 
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-            const city = citySelector ? citySelector.value : "Mianwali";
+    </div>
 
-            grid.innerHTML = '';
-            
-            let filtered = allRates.filter(i => 
-                i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query)
-            );
+  </section>
 
-            if(filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 text-sm font-bold">Koi item nahi mili!</div>`;
-                return;
-            }
 
-            filtered.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${item.category}</span>
-                                <span class="text-[10px] text-slate-400 font-semibold"><i class="fas fa-map-pin mr-1"></i>${city}</span>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-sm">${item.name}</h3>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-center">
-                            <div class="bg-emerald-50 p-2 rounded-xl border border-emerald-100">
-                                <span class="block text-[9px] text-emerald-800 font-bold uppercase">Govt Rate</span>
-                                <span class="text-xs font-black text-emerald-950">Rs ${item.govt}</span>
-                            </div>
-                            <div class="bg-amber-50 p-2 rounded-xl border border-amber-100">
-                                <span class="block text-[9px] text-amber-800 font-bold uppercase">Market Rate</span>
-                                <span class="text-xs font-black text-amber-950">Rs ${item.market}</span>
-                            </div>
-                        </div>
-                        <div class="text-right text-[9px] text-slate-400 mt-2 font-medium">Per ${item.unit || 'Unit'}</div>
-                    </div>
-                `;
-            });
-        }
+  <!-- GOVERNMENT -->
 
-        function renderGovtGrid() {
-            const grid = document.getElementById('govt-rates-grid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            allRates.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[9px] bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded uppercase">${item.category}</span>
-                            <h3 class="font-bold text-emerald-950 text-sm mt-2">${item.name}</h3>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-emerald-200/60 flex justify-between items-center">
-                            <span class="text-xs text-gray-600">Sarkari Rate:</span>
-                            <span class="text-sm font-black text-emerald-900">Rs ${item.govt} / ${item.unit || 'Unit'}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+  <section id="page-government" class="page hidden">
 
-        function renderMarketGrid() {
-            const grid = document.getElementById('market-rates-grid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            allRates.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[9px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded uppercase">${item.category}</span>
-                            <h3 class="font-bold text-amber-950 text-sm mt-2">${item.name}</h3>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-amber-200/60 flex justify-between items-center">
-                            <span class="text-xs text-gray-600">Open Market:</span>
-                            <span class="text-sm font-black text-amber-900">Rs ${item.market} / ${item.unit || 'Unit'}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+    <div class="mb-6">
 
-        function renderAdminTable() {
-            const tbody = document.getElementById('admin-table-body');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            allRates.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr class="border-b">
-                        <td class="p-3 font-bold">${item.name}</td>
-                        <td class="p-3">${item.category}</td>
-                        <td class="p-3 font-b
+      <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+        Official / Government
+      </div>
+
+      <h1 class="text-3xl font-black mt-1">
+        Government Rates
+      </h1>
+
+      <p class="text-slate-500 mt-1">
+        Category-wise official rates and notifications.
+      </p>
+
+    </div>
+
+
+    <div id="governmentCategories" class="flex gap-2 overflow-x-auto pb-3 mb-5"></div>
+
+    <div
+      id="governmentGrid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    ></div>
+
+  </section>
+
+
+  <!-- MARKET -->
+
+  <section id="page-market" class="page hidden">
+
+    <div class="mb-6">
+
+      <div class="text-xs font-bold text-blue-600 uppercase tracking-wider">
+        Local Market
+      </div>
+
+      <h1 class="text-3xl font-black mt-1">
+        Market Rates
+      </h1>
+
+      <p class="text-slate-500 mt-1">
+        Current market prices and government comparison.
+      </p>
+
+    </div>
+
+    <div class="mb-5 flex flex-col sm:flex-row gap-3">
+
+      <div class="relative flex-1">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+        <input
+          id="marketSearch"
+          oninput="renderMarket()"
+          class="w-full h-12 bg-white border border-slate-200 rounded-2xl pl-11 pr-4 outline-none focus:ring-4 focus:ring-blue-500/10"
+          placeholder="Search market rates..."
+        >
+      </div>
+
+      <select
+        id="marketCategory"
+        onchange="renderMarket()"
+        class="h-12 bg-white border border-slate-200 rounded-2xl px-4 font-semibold outline-none"
+      >
+        <option value="all">All Categories</option>
+      </select>
+
+    </div>
+
+    <div id="marketGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+  </section>
+
+
+  <!-- CALCULATORS -->
+
+  <section id="page-calculators" class="page hidden">
+
+    <div class="mb-6">
+
+      <div class="text-xs font-bold text-purple-600 uppercase tracking-wider">
+        Business Tools
+      </div>
+
+      <h1 class="text-3xl font-black mt-1">
+        Calculators
+      </h1>
+
+      <p class="text-slate-500 mt-1">
+        Fast calculations for your daily business decisions.
+      </p>
+
+    </div>
+
+
+    <div class="grid lg:grid-cols-3 gap-5">
+
+      <div class="lg:col-span-1 space-y-2">
+
+        <button onclick="selectCalculator('profit')" data-calc="profit" class="calc-btn w-full text-left p-4 rounded-2xl bg-slate-900 text-white font-bold">
+          <i class="fa-solid fa-chart-pie mr-2"></i> Profit Calculator
+        </button>
+
+        <button onclick="selectCalculator('margin')" data-calc="margin" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
+          <i class="fa-solid fa-percent mr-2"></i> Margin Calculator
+        </button>
+
+        <button onclick="selectCalculator('discount')" data-calc="discount" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
+          <i class="fa-solid fa-tag mr-2"></i> Discount Calculator
+        </button>
+
+        <button onclick="selectCalculator('currency')" data-calc="currency" class="calc-btn w-full text-left p-4 rounded-2xl bg-white border border-slate-200 font-bold">
+          <i class="fa-solid fa-money-bill-transfer mr-2"></i> Currency Calculator
+        </button>
+
+      </div>
+
+
+      <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 premium-shadow p-5 md:p-7">
+
+        <div id="calculatorContent"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ADMIN -->
+
+  <section id="page-admin" class="page hidden">
+
+    <div class="mb-6">
+
+      <div class="text-xs font-bold text-orange-600 uppercase tracking-wider">
+        Control Center
+      </div>
+
+      <h1 class="text-3xl font-black mt-1">
+        Admin Panel
+      </h1>
+
+      <p class="text-slate-500 mt-1">
+        Manage rates without editing GitHub code.
+      </p>
+
+    </div>
+
+
+    <!-- ADMIN STATS -->
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
+        <div class="text-xs text-slate-500">Total Items</div>
+        <div id="adminTotal" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
+        <div class="text-xs text-slate-500">Categories</div>
+        <div id="adminCategories" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
+        <div class="text-xs text-slate-500">Featured</div>
+        <div id="adminFeatured" class="text-2xl font-black mt-1">0</div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 border border-slate-100 premium-shadow">
+        <div class="text-xs text-slate-500">Data Status</div>
+        <div class="text-sm font-black text-emerald-600 mt-2">
+          <i class="fa-solid fa-circle-check mr-1"></i> Saved
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ADMIN ACTIONS -->
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
+
+      <button onclick="openRateModal()" class="p-4 rounded-2xl bg-slate-900 text-white text-left font-bold">
+        <i class="fa-solid fa-plus mr-2"></i>
+        Add Rate
+      </button>
+
+      <button onclick="exportData()" class="p-4 rounded-2xl bg-white border border-slate-200 text-left font-bold">
+        <i class="fa-solid fa-download mr-2"></i>
+        Export Data
+      </button>
+
+      <label class="p-4 rounded-2xl bg-white border border-slate-200 text-left font-bold cursor-pointer">
+        <i class="fa-solid fa-upload mr-2"></i>
+        Import Data
+        <input id="importFile" type="file" accept=".json" onchange="importData(event)" class="hidden">
+      </label>
+
+      <button onclick="resetDemoData()" class="p-4 rounded-2xl bg-red-50 border border-red-100 text-red-700 text-left font-bold">
+        <i class="fa-solid fa-rotate-left mr-2"></i>
+        Reset Demo Data
+      </button>
+
+    </div>
+
+
+    <!-- AI ASSISTANT -->
+
+    <div class="bg-gradient-to-br from-slate-950 to-slate-800 text-white rounded-3xl p-5 md:p-7 mb-6">
+
+      <div class="flex items-start gap-4">
+
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-robot text-xl"></i>
+        </div>
+
+        <div class="flex-1">
+
+          <h2 class="text-xl font-black">
+            RateDost AI Assistant
+          </h2>
+
+          <p class="text-sm text-slate-300 mt-1">
+            Future-ready assistant for rate verification and management.
+          </p>
+
+          <div class="mt-4 flex flex-col sm:flex-row gap-2">
+
+            <input
+              id="aiCommand"
+              class="flex-1 h-11 rounded-xl bg-white/10 border border-white/10 px-4 outline-none placeholder:text-slate-400"
+              placeholder="e.g. Check today's government rates"
+            >
+
+            <button onclick="runAICommand()" class="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black">
+              Run
+            </button>
+
+          </div>
+
+          <div id="aiResult" class="mt-4 hidden rounded-xl bg-white/5 border border-white/10 p-4 text-sm"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RATE TABLE -->
+
+    <div class="bg-white rounded-3xl border border-slate-100 premium-shadow overflow-hidden">
+
+      <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
+
+        <div>
+          <h2 class="font-black text-xl">Rate Management</h2>
+          <p class="text-sm text-slate-500">Add, edit or remove your rates.</p>
+        </div>
+
+        <input
+          id="admi
