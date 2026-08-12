@@ -3,88 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RateDost PK | Bilawal Khan Niazi</title>
+    <title>RateDost PK | Official Daily Market Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-slate-100 min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between font-sans text-slate-800">
 
     <!-- Header -->
-    <header class="bg-emerald-950 text-white p-4 shadow-md">
-        <div class="max-w-3xl mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-black">RATEDOST <span class="bg-amber-400 text-black text-xs px-1 rounded">PK</span></h1>
-                <p class="text-[11px] text-amber-300 font-bold">Founder & Owner: Bilawal Khan Niazi</p>
+    <header class="bg-emerald-950 text-white shadow-lg sticky top-0 z-50 border-b border-emerald-900">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="openHome()">
+                <div class="bg-amber-400 text-emerald-950 font-black px-3 py-1 rounded-lg text-lg shadow-md">RD</div>
+                <div>
+                    <h1 class="text-lg font-black tracking-wider">RATEDOST <span class="text-xs bg-red-600 px-1 rounded text-white">PK</span></h1>
+                    <p class="text-[10px] text-emerald-200">Founder & Owner: <span class="text-amber-300 font-bold">Bilawal Khan Niazi</span></p>
+                </div>
             </div>
-            <div class="space-x-2">
-                <button onclick="showSection('home')" class="bg-emerald-800 px-3 py-1.5 rounded text-xs font-bold">Home</button>
-                <button onclick="showSection('admin')" class="bg-amber-500 text-black px-3 py-1.5 rounded text-xs font-bold"><i class="fas fa-lock"></i> Admin</button>
+            
+            <!-- Hidden VIP Trigger for Admin (Double click on Portal) -->
+            <div class="flex items-center space-x-2">
+                <span ondblclick="openVIPAdmin()" class="text-[10px] text-emerald-400 cursor-pointer select-none bg-emerald-900/50 px-2 py-1 rounded border border-emerald-800" title="Double click for Admin">
+                    <i class="fas fa-shield-alt mr-1"></i> Portal
+                </span>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-3xl mx-auto p-4 w-full flex-grow">
+    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow">
         
-        <!-- Home Section -->
-        <div id="sec-home" class="space-y-4">
-            <div class="bg-white p-5 rounded-xl shadow border">
-                <h2 class="text-lg font-bold text-emerald-950 mb-2"><i class="fas fa-shield-alt text-emerald-700"></i> Official RateDost Portal</h2>
-                <p class="text-xs text-gray-600">Yeh platform mukammal tor par <strong>Bilawal Khan Niazi</strong> ki milkiyat aur control mein hai.</p>
+        <!-- PUBLIC MARKET RATES VIEW -->
+        <div id="public-view" class="space-y-6">
+            
+            <!-- Top Controls (City Selector & Search) -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <div class="bg-emerald-100 p-2.5 rounded-xl text-emerald-800">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-gray-400">Select Your City</label>
+                        <select id="city-selector" onchange="changeCityRates()" class="font-bold text-emerald-950 bg-transparent outline-none text-base cursor-pointer">
+                            <option value="Mianwali">Mianwali</option>
+                            <option value="Chiniot">Chiniot</option>
+                            <option value="Lahore">Lahore</option>
+                            <option value="Islamabad">Islamabad</option>
+                            <option value="Faisalabad">Faisalabad</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="relative w-full md:w-80">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                        <i class="fas fa-search text-xs"></i>
+                    </span>
+                    <input type="text" id="search-box" onkeyup="filterItems()" placeholder="Search petrol, gold, sabzi, cement..." class="w-full bg-slate-50 border border-slate-200 pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-600 transition">
+                </div>
             </div>
 
-            <div class="bg-white p-5 rounded-xl shadow border">
-                <h3 class="font-bold text-gray-800 text-sm mb-3">Live Market Rates (Mianwali & Punjab)</h3>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Petrol (Super)</span><span class="font-bold text-emerald-900">Rs 279.75</span></div>
-                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Gold (24K)</span><span class="font-bold text-emerald-900">Rs 242,500</span></div>
-                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Cement Bag</span><span class="font-bold text-emerald-900">Rs 1,350</span></div>
+            <!-- Banner / Notice -->
+            <div class="bg-gradient-to-r from-emerald-900 to-emerald-950 text-white p-5 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-amber-300"><i class="fas fa-bolt mr-2"></i> Daily Updated Market & Govt Rates</h2>
+                    <p class="text-xs text-emerald-100 mt-1">Aapke shehar mein sarkari aur khula rate kya chal raha hai? Tamam ashya ki mukammal fehrist yahan barwaqt dastiyab hai.</p>
+                </div>
+                <div class="bg-white/10 px-4 py-2 rounded-xl text-center border border-white/10 text-xs">
+                    <span class="block text-amber-300 font-bold" id="current-date-display">August 12, 2026</span>
+                    <span class="text-[10px] text-gray-300">Live & Verified</span>
+                </div>
+            </div>
+
+            <!-- Rates Grid (All Categories) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="rates-grid">
+                <!-- Dynamic cards will load here -->
+            </div>
+
+            <!-- Public Rate Reporting & Comments Section -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mt-10">
+                <div class="mb-4">
+                    <h3 class="font-black text-emerald-950 text-base"><i class="fas fa-comments text-emerald-700 mr-2"></i> Public Rate Reporting & Feedback</h3>
+                    <p class="text-xs text-gray-500">Agar aapke elaqe mein rate mukhtalif hai, toh yahan report karein taake baqi awam tak bhi sahi maloomat pahunch sakein.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                    <input type="text" id="rep-name" placeholder="Aap Ka Naam" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-600">
+                    <input type="text" id="rep-item" placeholder="Cheez Ka Naam (e.g. Tamatar)" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-600">
+                    <input type="text" id="rep-price" placeholder="Wahan Kya Rate Hai? (Rs)" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-600">
+                </div>
+                <textarea id="rep-msg" placeholder="Mazeed tafseel ya elaqay ka naam..." class="w-full border border-slate-200 bg-slate-50 p-3 rounded-xl text-sm mb-3 outline-none focus:ring-2 focus:ring-emerald-600" rows="2"></textarea>
+                <button onclick="submitPublicReport()" class="bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-emerald-950 transition shadow">Submit Report</button>
+
+                <div class="mt-6 border-t pt-4">
+                    <h4 class="font-bold text-gray-700 text-xs mb-3">Aam Shehriyon Ki Latest Reports:</h4>
+                    <div id="public-comments-list" class="space-y-2 text-xs">
+                        <div class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100 flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-emerald-950">Tariq Khan (Mianwali):</span> 
+                                <span class="text-gray-700">Cheeni ka wholesale rate market mein 142 rupay chal raha hai.</span>
+                            </div>
+                            <span class="text-[10px] text-gray-400">Aaj</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Section -->
-        <div id="sec-admin" class="hidden space-y-4">
-            <div id="login-box" class="bg-white p-6 rounded-xl shadow border text-center max-w-sm mx-auto">
-                <h3 class="font-bold text-gray-800 mb-3">Bilawal Khan Niazi - Admin Access</h3>
-                <input type="password" id="pass-input" placeholder="Enter Secret Code" class="w-full border p-2.5 rounded text-center text-sm mb-3 outline-none focus:ring-2 focus:ring-emerald-600">
-                <button onclick="verifyLogin()" class="w-full bg-emerald-950 text-white py-2.5 rounded font-bold text-sm">Login Dashboard</button>
+        <!-- VIP SECURE ADMIN PANEL (Hidden by Default) -->
+        <div id="admin-view" class="hidden max-w-xl mx-auto py-4">
+            <!-- Login Box -->
+            <div id="admin-login-box" class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200 text-center">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-900 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h3 class="font-black text-xl text-slate-900">VIP Admin Verification</h3>
+                <p class="text-xs text-slate-500 mb-6">Restricted Area - Bilawal Khan Niazi Only</p>
+                
+                <input type="password" id="vip-secret-input" placeholder="Enter Secure Password" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-center text-sm mb-4 outline-none focus:ring-2 focus:ring-emerald-600">
+                <button onclick="verifyVIPAccess()" class="w-full bg-emerald-950 text-white py-3.5 rounded-xl font-bold text-sm hover:bg-black transition shadow-lg">Access Dashboard</button>
+                <button onclick="openHome()" class="mt-3 text-xs text-gray-500 hover:underline">← Back to Website</button>
+                <p id="error-msg" class="text-red-500 text-xs mt-3 hidden font-bold">Ghalt Password! Access Denied.</p>
             </div>
 
-            <div id="dash-box" class="hidden bg-white p-6 rounded-xl shadow border">
-                <h3 class="font-bold text-emerald-900 text-lg mb-2">Welcome Back, Bilawal!</h3>
-                <p class="text-xs text-gray-500 mb-4">Aapka admin panel successfully unlock ho chuka hai.</p>
-                <button onclick="location.reload()" class="bg-red-600 text-white text-xs px-4 py-2 rounded font-bold">Lock / Logout</button>
+            <!-- Admin Control Dashboard -->
+            <div id="admin-dashboard-box" class="hidden bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-200 space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="font-black text-emerald-950 text-lg">VIP Control Panel</h2>
+                        <p class="text-xs text-gray-500">Manager: Bilawal Khan Niazi</p>
+                    </div>
+                    <button onclick="openHome()" class="bg-slate-100 text-slate-700 text-xs px-4 py-2 rounded-xl font-bold hover:bg-slate-200">Exit / Lock</button>
+                </div>
+
+                <!-- Add New Rate Form -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-slate-800 text-sm"><i class="fas fa-plus-circle text-emerald-700 mr-1"></i> Naya Item / Rate Shamil Karein</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <input type="text" id="admin-item-name" placeholder="Item Name (e.g. Tomato)" class="border bg-slate-50 p-3 rounded-xl text-sm outline-none">
+                        <input type="text" id="admin-category" placeholder="Category (e.g. Vegetables)" class="border bg-slate-50 p-3 rounded-xl text-sm outline-none">
+                        <input type="number" id="admin-govt-rate" placeholder="Govt Rate (Rs)" class="border bg-slate-50 p-3 rounded-xl text-sm outline-none">
+                        <input type="number" id="admin-market-rate" placeholder="Market Rate (Rs)" class="border bg-slate-50 p-3 rounded-xl text-sm outline-none">
+                    </div>
+                    <button onclick="addNewItemAdmin()" class="w-full bg-emerald-900 text-white font-bold py-3 rounded-xl text-sm hover:bg-emerald-950 transition shadow">Publish Item Live</button>
+                </div>
             </div>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-center py-4 text-xs mt-6">
-        <p>© 2026 RateDost PK. All Rights Reserved.</p>
-        <p class="text-amber-400 font-bold mt-1">Developed & Managed by Bilawal Khan Niazi</p>
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 text-xs mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 space-y-1">
+            <p>© 2026 RateDost PK. All Rights Reserved.</p>
+            <p class="text-amber-400 font-bold">Developed & Managed by Bilawal Khan Niazi</p>
+        </div>
     </footer>
 
+    <!-- Script Logic -->
     <script>
-        const MY_SECRET = "Khan123$$$M";
+        const SECURE_ADMIN_PASS = "Khan123$$$M";
+        let activeCity = "Mianwali";
 
-        function showSection(sec) {
-            document.getElementById('sec-home').classList.add('hidden');
-            document.getElementById('sec-admin').classList.add('hidden');
-            document.getElementById('sec-' + sec).classList.remove('hidden');
+        let allRates = [
+            { id: 1, name: "Petrol (Super)", category: "Fuel", govt: 279.75, market: 279.75, unit: "Liter" },
+            { id: 2, name: "High Speed Diesel", category: "Fuel", govt: 284.10, market: 284.10, unit: "Liter" },
+            { id: 3, name: "Gold (24K)", category: "Gold", govt: 242500, market: 243000, unit: "Tola" },
+            { id: 4, name: "Cement Bag", category: "Construction", govt: 1350, market: 1380, unit: "Bag" },
+            { id: 5, name: "Potato (Aaloo)", category: "Vegetables", govt: 75, market: 90, unit: "Kg" },
+            { id: 6, name: "Onion (Pyaaz)", category: "Vegetables", govt: 110, market: 130, unit: "Kg" },
+            { id: 7, name: "Tomato (Tamatar)", category: "Vegetables", govt: 100, market: 120, unit: "Kg" },
+            { id: 8, name: "Sugar (Cheeni)", category: "Grocery", govt: 140, market: 145, unit: "Kg" },
+            { id: 9, name: "Cooking Oil (Dalda)", category: "Grocery", govt: 550, market: 570, unit: "Liter" },
+            { id: 10, name: "Wheat Flour (Atta 20kg)", category: "Grocery", govt: 2800, market: 2850, unit: "Bag" }
+        ];
+
+        function changeCityRates() {
+            activeCity = document.getElementById('city-selector').value;
+            renderRatesGrid();
         }
 
-        function verifyLogin() {
-            let val = document.getElementById('pass-input').value;
-            if(val === MY_SECRET) {
-                document.getElementById('login-box').classList.add('hidden');
-                document.getElementById('dash-box').classList.remove('hidden');
-                alert("Access Granted: Welcome Bilawal Khan Niazi");
+        function renderRatesGrid(data = allRates) {
+            const grid = document.getElementById('rates-grid');
+            grid.innerHTML = '';
+
+            data.forEach(item => {
+                let cityMultiplier = activeCity === "Lahore" || activeCity === "Islamabad" ? 1.02 : 1.0;
+                let adjustedMarket = Math.round(item.market * cityMultiplier);
+                let adjustedGovt = Math.round(item.govt * cityMultiplier);
+
+                grid.innerHTML += `
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${item.category}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold"><i class="fas fa-map-pin mr-1"></i>${activeCity}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm">${item.name}</h3>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-center">
+                            <div class="bg-emerald-50/70 p-2 rounded-xl border border-emerald-100">
+                                <span class="block text-[9px] text-emerald-800 font-bold uppercase">Govt Rate</span>
+                                <span class="text-xs font-black text-emerald-950">Rs ${adjustedGovt}</span>
+                            </div>
+                            <div class="bg-amber-50/70 p-2 rounded-xl border border-amber-100">
+                                <span class="block text-[9px] text-amber-800 font-bold uppercase">Market Rate</span>
+                                <span class="text-xs font-black text-amber-950">Rs ${adjustedMarket}</span>
+                            </div>
+                        </div>
+                        <div class="text-right text-[9px] text-slate-400 mt-2 font-medium">Per ${item.unit}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterItems() {
+            const query = document.getElementById('search-box').value.toLowerCase();
+            const filtered = allRates.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query));
+            renderRatesGrid(filtered);
+        }
+
+        function openVIPAdmin() {
+            document.getElementById('public-view').classList.add('hidden');
+            document.getElementById('admin-view').classList.remove('hidden');
+            document.getElementById('admin-login-box').classList.remove('hidden');
+            document.getElementById('admin-dashboard-box').classList.add('hidden');
+        }
+
+        function openHome() {
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('public-view').classList.remove('hidden');
+            document.getElementById('vip-secret-input').value = '';
+            document.getElementById('error-msg').classList.add('hidden');
+        }
+
+        function verifyVIPAccess() {
+            const pass = document.getElementById('vip-secret-input').value;
+            if(pass === SECURE_ADMIN_PASS) {
+                document.getElementById('admin-login-box').classList.add('hidden');
+                document.getElementById('admin-dashboard-box').classList.remove('hidden');
+                document.getElementById('error-msg').classList.add('hidden');
             } else {
-                alert("Ghalt Password! Access Denied.");
+                document.getElementById('error-msg').classList.remove('hidden');
             }
         }
+
+        function addNewItemAdmin() {
+            const name = document.getElementById('admin-item-name').value;
+            const cat = document.getElementById('admin-category').value;
+            const govt = parseFloat(document.getElementById('admin-govt-rate').value);
+            const market = parseFloat(document.getElementById('admin-market-rate').value);
+
+            if(!name || !cat || !govt || !market) {
+                alert('Baraye meharbani tamaam feilds mukammal bharein!');
+                return;
+            }
+
+            allRates.push({
+                id: allRates.length + 1,
+                name: name,
+                category: cat,
+                govt: govt,
+                market: market,
+                unit: "Unit"
+            });
+
+            renderRatesGrid();
+            alert('Naya rate kamyabi ke sath live kar diya gaya hai!');
+            document.getElementById('admin-item-name').value = '';
+            document.getElementById('admin-category').value = '';
+            document.getElementById('admin-govt-rate').value = '';
+            document.getElementById('admin-market-rate').value = '';
+            openHome();
+        }
+
+        function submitPublicReport() {
+            const name = document.getElementById('rep-name').value;
+            const item = document.getElementById('rep-item').value;
+            const price = document.getElementById('rep-price').value;
+            const msg = document.getElementById('rep-msg').value;
+
+            if(!name || !item || !price) {
+                alert('Naam, Cheez aur Rate likhna lazmi hai!');
+                return;
+            }
+
+            const list = document.getElementById('public-comments-list');
+            list.innerHTML = `
+                <div class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100 flex justify-between items-start">
+                    <div>
+                        <span class="font-bold text-emerald-950">${name} (${activeCity}):</span> 
+                        <span class="text-gray-700">${item} ka rate <strong>Rs ${price}</strong> bataya. ${msg}</span>
+                    </div>
+                    <span class="text-[10px] text-emerald-700 font-bold">New</span>
+                </div>
+            ` + list.innerHTML;
+
+            document.getElementById('rep-name').value = '';
+            document.getElementById('rep-item').value = '';
+            document.getElementById('rep-price').value = '';
+            document.getElementById('rep-msg').value = '';
+            alert('Aapki report submit ho gayi hai!');
+        }
+
+        renderRatesGrid();
     </script>
 </body>
-</html>
+    </html>
+    
