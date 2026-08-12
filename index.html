@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RateDost - Pakistan ke Rates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <header class="bg-emerald-800 text-white p-4 text-center">
+        <h1 class="text-xl font-bold">RateDost Admin Panel</h1>
+        <button onclick="toggleAdminModal()" class="mt-2 bg-amber-500 text-white px-4 py-2 rounded">Login to Admin</button>
+    </header>
+
+    <div id="adminModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-lg w-full max-w-sm">
+            <h2 class="font-bold mb-4">Admin Login</h2>
+            <input type="password" id="passcode" placeholder="Enter Password" class="w-full border p-2 mb-4">
+            <button onclick="verifyPasscode()" class="w-full bg-emerald-800 text-white py-2">Login</button>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSCODE = "Khan123$$$";
+        function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
+        function verifyPasscode() {
+            const val = document.getElementById('passcode').value;
+            if (val === ADMIN_PASSCODE) {
+                alert("Access Granted!");
+                toggleAdminModal();
+            } else {
+                alert("Incorrect Password!");
+            }
+        }
+    </script>
+</body>
+</html>
