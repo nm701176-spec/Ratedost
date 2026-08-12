@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="site-title">RateDost PK | Pakistan ke Rates, Profit & Business Tools</title>
+    <title>RateDost PK | Pakistan Daily Rates & Business Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -21,16 +21,16 @@
             </div>
             
             <!-- Navigation Links -->
-            <nav class="flex items-center space-x-1 md:space-x-2 text-[10px] md:text-[11px] font-bold overflow-x-auto py-1">
-                <button onclick="switchTab('home')" class="bg-emerald-900 px-2 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Home</button>
-                <button onclick="switchTab('govt')" class="bg-emerald-900 px-2 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Govt Rates</button>
-                <button onclick="switchTab('market')" class="bg-emerald-900 px-2 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Market Rates</button>
-                <button onclick="switchTab('calculators')" class="bg-emerald-900 px-2 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Calculators</button>
+            <nav class="flex items-center space-x-1 text-[10px] md:text-[11px] font-bold overflow-x-auto py-1">
+                <button onclick="switchTab('home')" class="nav-btn bg-emerald-900 px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Home</button>
+                <button onclick="switchTab('govt')" class="nav-btn bg-emerald-900 px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Govt Rates</button>
+                <button onclick="switchTab('market')" class="nav-btn bg-emerald-900 px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Market Rates</button>
+                <button onclick="switchTab('calculators')" class="nav-btn bg-emerald-900 px-2.5 py-1.5 rounded-lg hover:bg-emerald-800 transition text-amber-300 whitespace-nowrap">Calculators</button>
             </nav>
 
             <!-- Admin Portal Button -->
             <div>
-                <button onclick="openAdminLogin()" class="text-[10px] text-emerald-950 bg-amber-400 px-2 py-1.5 rounded-lg font-black hover:bg-amber-300 transition shadow whitespace-nowrap">
+                <button onclick="openAdminLogin()" class="text-[10px] text-emerald-950 bg-amber-400 px-2.5 py-1.5 rounded-lg font-black hover:bg-amber-300 transition shadow whitespace-nowrap">
                     <i class="fas fa-shield-alt mr-0.5"></i> Admin
                 </button>
             </div>
@@ -40,14 +40,14 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-grow">
         
-        <!-- ================= PUBLIC HOME VIEW ================= -->
-        <div id="home-view" class="space-y-6 view-section">
+        <!-- ================= HOME VIEW ================= -->
+        <div id="home-view" class="view-section space-y-6">
             <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 p-4 rounded-2xl shadow-md font-bold flex items-center justify-between gap-4">
                 <div class="flex items-center space-x-3">
                     <i class="fas fa-bullhorn text-xl"></i>
-                    <span id="promo-text-display">Khush Khabri! Mianwali, Chiniot aur tamam shehron ke sarkari aur market rates ab aik click par barwaqt dastiyab hain.</span>
+                    <span>Khush Khabri! Mianwali, Chiniot aur tamam shehron ke sarkari aur market rates ab aik click par dastiyab hain.</span>
                 </div>
-                <span class="text-[10px] bg-emerald-950 text-amber-300 px-2 py-1 rounded uppercase tracking-wider hidden md:inline-block">Live Notice</span>
+                <span class="text-[10px] bg-emerald-950 text-amber-300 px-2 py-1 rounded uppercase tracking-wider hidden md:inline-block">AI Auto-Sync Live</span>
             </div>
 
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -57,7 +57,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] uppercase font-bold text-gray-400">Select Your City</label>
-                        <select id="city-selector" onchange="changeCityRates()" class="font-bold text-emerald-950 bg-transparent outline-none text-base cursor-pointer">
+                        <select id="city-selector" onchange="filterItems()" class="font-bold text-emerald-950 bg-transparent outline-none text-base cursor-pointer">
                             <option value="Mianwali">Mianwali</option>
                             <option value="Chiniot">Chiniot</option>
                             <option value="Lahore">Lahore</option>
@@ -77,105 +77,110 @@
 
             <div>
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="font-black text-emerald-950 text-base md:text-lg"><i class="fas fa-list-alt text-emerald-700 mr-2"></i> All Pakistan Daily Rates (Govt vs Market)</h2>
-                    <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-lg">Updated Daily</span>
+                    <h2 class="font-black text-emerald-950 text-base md:text-lg"><i class="fas fa-list-alt text-emerald-700 mr-2"></i> All Daily Listings (Govt vs Market Rates)</h2>
+                    <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-lg">AI Verified</span>
                 </div>
+                <!-- Main Grid Container -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="rates-grid">
-                    <!-- Cards loaded dynamically -->
+                    <!-- Cards will be populated securely via JS -->
                 </div>
-            </div>
-
-            <!-- Public Rate Reporting -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mt-10">
-                <div class="mb-4">
-                    <h3 class="font-black text-emerald-950 text-base"><i class="fas fa-comments text-emerald-700 mr-2"></i> Public Rate Reporting & Feedback</h3>
-                    <p class="text-xs text-gray-500">Agar aapke elaqe mein rate mukhtalif hai, toh yahan report karein.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-                    <input type="text" id="rep-name" placeholder="Aap Ka Naam" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none">
-                    <input type="text" id="rep-item" placeholder="Cheez Ka Naam (e.g. Tamatar)" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none">
-                    <input type="text" id="rep-price" placeholder="Wahan Kya Rate Hai? (Rs)" class="border border-slate-200 bg-slate-50 p-2.5 rounded-xl text-sm outline-none">
-                </div>
-                <textarea id="rep-msg" placeholder="Mazeed tafseel..." class="w-full border border-slate-200 bg-slate-50 p-3 rounded-xl text-sm mb-3 outline-none" rows="2"></textarea>
-                <button onclick="submitPublicReport()" class="bg-emerald-900 text-white font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-emerald-950 transition shadow">Submit Report</button>
             </div>
         </div>
 
-        <!-- ================= GOVERNMENT RATES VIEW ================= -->
-        <div id="govt-view" class="hidden space-y-6 view-section">
+        <!-- ================= GOVT RATES VIEW ================= -->
+        <div id="govt-view" class="view-section hidden space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-landmark text-emerald-700 mr-2"></i> Official Government Rates Portal</h2>
-                <p class="text-xs text-gray-500 mb-6">Pakistan ke tamam sarkari aur district administration ke daily approved rates.</p>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="font-black text-emerald-950 text-lg"><i class="fas fa-landmark text-emerald-700 mr-2"></i> Official Government Rates Portal</h2>
+                        <p class="text-xs text-gray-500">Food, Construction, Fuel aur tamam sarkari category rates.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="govt-category-filter" onchange="renderGovtRates()" class="bg-slate-100 border p-2 rounded-xl text-xs font-bold text-slate-700 outline-none">
+                            <option value="All">All Categories</option>
+                            <option value="Food">Food & Grocery</option>
+                            <option value="Vegetables">Vegetables & Fruit</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Fuel">Fuel & Energy</option>
+                            <option value="Gold">Gold & Bullion</option>
+                        </select>
+                        <button onclick="triggerAIAutoSync()" class="bg-emerald-900 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-emerald-950"><i class="fas fa-robot mr-1"></i> AI Sync</button>
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="govt-rates-grid">
-                    <!-- Loaded dynamically -->
+                    <!-- Populated via JS -->
                 </div>
             </div>
         </div>
 
         <!-- ================= MARKET RATES VIEW ================= -->
-        <div id="market-view" class="hidden space-y-6 view-section">
+        <div id="market-view" class="view-section hidden space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-store text-amber-600 mr-2"></i> Open Market Rates Portal</h2>
-                <p class="text-xs text-gray-500 mb-6">Aam bazaar aur wholesale market ke real-time rates.</p>
+                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-store text-amber-600 mr-2"></i> Open Market Wholesale Rates</h2>
+                <p class="text-xs text-gray-500 mb-6">Local open market ke real-time rates.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="market-rates-grid">
-                    <!-- Loaded dynamically -->
+                    <!-- Populated via JS -->
                 </div>
             </div>
         </div>
 
         <!-- ================= CALCULATORS VIEW ================= -->
-        <div id="calculators-view" class="hidden space-y-6 view-section max-w-3xl mx-auto">
+        <div id="calculators-view" class="view-section hidden space-y-6 max-w-3xl mx-auto">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-calculator text-emerald-700 mr-2"></i> Business & Profit Calculators</h2>
-                <p class="text-xs text-gray-500 mb-6">Aapke e-commerce aur business ke liye muft calculation tools.</p>
-                <div class="bg-slate-50 p-4 rounded-xl border">
-                    <h3 class="font-bold text-sm text-slate-900 mb-2">Courier COD Profit Calculator</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                        <input type="number" id="calc-price" placeholder="Product Selling Price (Rs)" class="p-2.5 border rounded-lg text-sm bg-white">
+                <h2 class="font-black text-emerald-950 text-lg mb-2"><i class="fas fa-calculator text-emerald-700 mr-2"></i> Business Profit Calculator</h2>
+                <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <input type="number" id="calc-price" placeholder="Selling Price (Rs)" class="p-2.5 border rounded-lg text-sm bg-white">
                         <input type="number" id="calc-cost" placeholder="Product Cost (Rs)" class="p-2.5 border rounded-lg text-sm bg-white">
                     </div>
                     <button onclick="calculateProfit()" class="bg-emerald-900 text-white text-xs font-bold px-4 py-2 rounded-lg">Calculate Net Profit</button>
-                    <p id="calc-result" class="text-xs font-bold text-emerald-950 mt-3"></p>
+                    <p id="calc-result" class="text-xs font-bold text-emerald-950 mt-2"></p>
                 </div>
             </div>
         </div>
 
         <!-- ================= ADMIN VIEW ================= -->
-        <div id="admin-view" class="hidden max-w-4xl mx-auto py-2 view-section">
+        <div id="admin-view" class="view-section hidden max-w-4xl mx-auto py-2">
             <div id="admin-login-box" class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200 text-center max-w-md mx-auto">
                 <div class="w-16 h-16 bg-emerald-100 text-emerald-900 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
                     <i class="fas fa-fingerprint"></i>
                 </div>
                 <h3 class="font-black text-xl text-slate-900">VIP Admin Verification</h3>
-                <p class="text-xs text-slate-500 mb-6">Restricted Area - Bilawal Khan Niazi Only</p>
+                <p class="text-xs text-slate-500 mb-6">Bilawal Khan Niazi Only</p>
                 <input type="password" id="vip-secret-input" placeholder="Enter Secure Password" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-center text-sm mb-4 outline-none">
                 <button onclick="verifyVIPAccess()" class="w-full bg-emerald-950 text-white py-3.5 rounded-xl font-bold text-sm hover:bg-black transition shadow-lg">Access Management Panel</button>
                 <button onclick="switchTab('home')" class="mt-3 text-xs text-gray-500 hover:underline">← Back to Website</button>
-                <p id="error-msg" class="text-red-500 text-xs mt-3 hidden font-bold">Ghalt Password! Access Denied.</p>
+                <p id="error-msg" class="text-red-500 text-xs mt-3 hidden font-bold">Ghalt Password!</p>
             </div>
 
             <div id="admin-dashboard-box" class="hidden bg-white p-6 rounded-3xl shadow-xl border border-slate-200 space-y-6">
                 <div class="flex justify-between items-center border-b pb-4">
                     <div>
-                        <h2 class="font-black text-emerald-950 text-lg">Master Admin & Settings Panel</h2>
-                        <p class="text-xs text-gray-500">Owner & Manager: Bilawal Khan Niazi</p>
+                        <h2 class="font-black text-emerald-950 text-lg">Master Admin Panel</h2>
+                        <p class="text-xs text-gray-500">Manager: Bilawal Khan Niazi</p>
                     </div>
                     <button onclick="switchTab('home')" class="bg-slate-100 text-slate-700 text-xs px-4 py-2 rounded-xl font-bold">Lock & Exit</button>
                 </div>
 
                 <div class="bg-slate-50 p-4 rounded-2xl border space-y-3">
-                    <h3 class="font-bold text-slate-900 text-sm"><i class="fas fa-plus-circle text-emerald-700 mr-1"></i> Naya Rate Shamil Karein</h3>
+                    <h3 class="font-bold text-slate-900 text-sm"><i class="fas fa-plus-circle text-emerald-700 mr-1"></i> Add New Item & Rates</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-                        <input type="text" id="admin-item-name" placeholder="Item Name" class="border bg-white p-2.5 rounded-xl text-xs outline-none">
-                        <input type="text" id="admin-category" placeholder="Category" class="border bg-white p-2.5 rounded-xl text-xs outline-none">
+                        <input type="text" id="admin-item-name" placeholder="Item Name (e.g. Daal Masoor)" class="border bg-white p-2.5 rounded-xl text-xs outline-none">
+                        <select id="admin-category" class="border bg-white p-2.5 rounded-xl text-xs outline-none font-bold">
+                            <option value="Food">Food & Grocery</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Fuel">Fuel</option>
+                            <option value="Gold">Gold</option>
+                        </select>
                         <input type="number" id="admin-govt-rate" placeholder="Govt Rate (Rs)" class="border bg-white p-2.5 rounded-xl text-xs outline-none">
                         <input type="number" id="admin-market-rate" placeholder="Market Rate (Rs)" class="border bg-white p-2.5 rounded-xl text-xs outline-none">
                     </div>
-                    <button onclick="addNewRateAdmin()" class="bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs">Publish Live</button>
+                    <button onclick="addNewRateAdmin()" class="bg-emerald-900 text-white font-bold px-5 py-2 rounded-xl text-xs">Publish Item Live</button>
                 </div>
 
                 <div class="overflow-x-auto">
-                    <h3 class="font-bold text-slate-800 text-sm mb-3">All Active Rates Database</h3>
+                    <h3 class="font-bold text-slate-800 text-sm mb-3">All Live Listings Database</h3>
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700 border-b">
@@ -205,37 +210,36 @@
     <!-- Script Logic -->
     <script>
         const SECURE_ADMIN_PASS = "Khan123$$$M";
-        let activeCity = "Mianwali";
 
-        let allRates = [
-            { id: 1, name: "Petrol (Super)", category: "Fuel", govt: 279.75, market: 279.75, unit: "Liter", status: "Live" },
-            { id: 2, name: "High Speed Diesel", category: "Fuel", govt: 284.10, market: 284.10, unit: "Liter", status: "Live" },
-            { id: 3, name: "Gold (24K)", category: "Gold", govt: 242500, market: 243000, unit: "Tola", status: "Live" },
-            { id: 4, name: "Cement Bag (50kg)", category: "Construction", govt: 1350, market: 1380, unit: "Bag", status: "Live" },
-            { id: 5, name: "Potato (Aaloo)", category: "Vegetables", govt: 75, market: 90, unit: "Kg", status: "Live" },
-            { id: 6, name: "Onion (Pyaaz)", category: "Vegetables", govt: 110, market: 130, unit: "Kg", status: "Live" },
-            { id: 7, name: "Tomato (Tamatar)", category: "Vegetables", govt: 100, market: 120, unit: "Kg", status: "Live" },
-            { id: 8, name: "Sugar (Cheeni)", category: "Grocery", govt: 140, market: 145, unit: "Kg", status: "Live" },
-            { id: 9, name: "Cooking Oil (Dalda)", category: "Grocery", govt: 550, market: 570, unit: "Liter", status: "Live" },
-            { id: 10, name: "Wheat Flour (Atta 20kg)", category: "Grocery", govt: 2800, market: 2850, unit: "Bag", status: "Live" }
+        let defaultRates = [
+            { id: 1, name: "Petrol (Super)", category: "Fuel", govt: 279.75, market: 279.75, unit: "Liter" },
+            { id: 2, name: "High Speed Diesel", category: "Fuel", govt: 284.10, market: 284.10, unit: "Liter" },
+            { id: 3, name: "Gold (24K)", category: "Gold", govt: 242500, market: 243000, unit: "Tola" },
+            { id: 4, name: "Cement Bag (50kg)", category: "Construction", govt: 1350, market: 1380, unit: "Bag" },
+            { id: 5, name: "Saria Grade 60", category: "Construction", govt: 265000, market: 270000, unit: "Ton" },
+            { id: 6, name: "Potato (Aaloo)", category: "Vegetables", govt: 75, market: 90, unit: "Kg" },
+            { id: 7, name: "Onion (Pyaaz)", category: "Vegetables", govt: 110, market: 130, unit: "Kg" },
+            { id: 8, name: "Tomato (Tamatar)", category: "Vegetables", govt: 100, market: 120, unit: "Kg" },
+            { id: 9, name: "Sugar (Cheeni)", category: "Food", govt: 140, market: 145, unit: "Kg" },
+            { id: 10, name: "Cooking Oil (Dalda)", category: "Food", govt: 550, market: 570, unit: "Liter" },
+            { id: 11, name: "Wheat Flour (Atta 20kg)", category: "Food", govt: 2800, market: 2850, unit: "Bag" },
+            { id: 12, name: "Daal Chana", category: "Food", govt: 280, market: 300, unit: "Kg" }
         ];
 
-        if(localStorage.getItem('ratedost_items')) {
-            allRates = JSON.parse(localStorage.getItem('ratedost_items'));
-        }
+        let allRates = JSON.parse(localStorage.getItem('ratedost_items')) || defaultRates;
 
         function switchTab(tab) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             
             if(tab === 'home') {
                 document.getElementById('home-view').classList.remove('hidden');
-                renderRatesGrid();
+                filterItems();
             } else if(tab === 'govt') {
                 document.getElementById('govt-view').classList.remove('hidden');
-                renderGovtRatesGrid();
+                renderGovtRates();
             } else if(tab === 'market') {
                 document.getElementById('market-view').classList.remove('hidden');
-                renderMarketRatesGrid();
+                renderMarketRates();
             } else if(tab === 'calculators') {
                 document.getElementById('calculators-view').classList.remove('hidden');
             }
@@ -260,22 +264,27 @@
             }
         }
 
-        function changeCityRates() {
-            activeCity = document.getElementById('city-selector').value;
-            renderRatesGrid();
-        }
-
-        function renderRatesGrid(data = allRates) {
+        function filterItems() {
+            const query = (document.getElementById('search-box')?.value || "").toLowerCase();
+            const city = document.getElementById('city-selector')?.value || "Mianwali";
             const grid = document.getElementById('rates-grid');
+            if(!grid) return;
+
             grid.innerHTML = '';
-            data.forEach(item => {
-                if(item.status !== "Live") return;
+            let filtered = allRates.filter(i => i.name.toLowerCase().includes(query) || i.category.toLowerCase().includes(query));
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 text-sm font-bold">Koi item nahi mili! Admin panel se add karein.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
                 grid.innerHTML += `
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
                         <div>
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${item.category}</span>
-                                <span class="text-[10px] text-slate-400 font-semibold"><i class="fas fa-map-pin mr-1"></i>${activeCity}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold"><i class="fas fa-map-pin mr-1"></i>${city}</span>
                             </div>
                             <h3 class="font-bold text-slate-900 text-sm">${item.name}</h3>
                         </div>
@@ -289,10 +298,4 @@
                                 <span class="text-xs font-black text-amber-950">Rs ${item.market}</span>
                             </div>
                         </div>
-                        <div class="text-right text-[9px] text-slate-400 mt-2 font-medium">Per ${item.unit}</div>
-                    </div>
-                `;
-            });
-        }
-
-  
+                        <div class="text-right text-[9px] text-slate-400 mt-2 font-medium">Per ${item.uni
