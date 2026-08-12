@@ -3,74 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RateDost PK | Official</title>
+    <title>RateDost PK | Bilawal Khan Niazi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
     <!-- Header -->
-    <header class="bg-emerald-950 text-white p-5 shadow-lg">
-        <div class="max-w-2xl mx-auto flex justify-between items-center">
+    <header class="bg-emerald-950 text-white p-4 shadow-md">
+        <div class="max-w-3xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-black italic tracking-tighter">RATEDOST</h1>
-                <p class="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">Managed by Bilawal Khan Niazi</p>
+                <h1 class="text-xl font-black">RATEDOST <span class="bg-amber-400 text-black text-xs px-1 rounded">PK</span></h1>
+                <p class="text-[11px] text-amber-300 font-bold">Founder & Owner: Bilawal Khan Niazi</p>
             </div>
-            <button onclick="toggleAdmin()" class="bg-amber-500 text-black px-4 py-1 rounded font-bold text-sm">ADMIN</button>
+            <div class="space-x-2">
+                <button onclick="showSection('home')" class="bg-emerald-800 px-3 py-1.5 rounded text-xs font-bold">Home</button>
+                <button onclick="showSection('admin')" class="bg-amber-500 text-black px-3 py-1.5 rounded text-xs font-bold"><i class="fas fa-lock"></i> Admin</button>
+            </div>
         </div>
     </header>
 
-    <!-- Content -->
-    <main class="max-w-2xl mx-auto p-6 w-full flex-grow">
+    <!-- Main Container -->
+    <main class="max-w-3xl mx-auto p-4 w-full flex-grow">
         
-        <!-- Public View -->
-        <div id="public-view">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 class="font-bold text-gray-700 mb-4"><i class="fas fa-chart-line text-emerald-700 mr-2"></i> Current Market Rates</h2>
-                <div class="space-y-3">
-                    <div class="flex justify-between border-b pb-2"><span>Petrol</span><span class="font-bold">Rs 279.75</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Gold</span><span class="font-bold">Rs 242,500</span></div>
+        <!-- Home Section -->
+        <div id="sec-home" class="space-y-4">
+            <div class="bg-white p-5 rounded-xl shadow border">
+                <h2 class="text-lg font-bold text-emerald-950 mb-2"><i class="fas fa-shield-alt text-emerald-700"></i> Official RateDost Portal</h2>
+                <p class="text-xs text-gray-600">Yeh platform mukammal tor par <strong>Bilawal Khan Niazi</strong> ki milkiyat aur control mein hai.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow border">
+                <h3 class="font-bold text-gray-800 text-sm mb-3">Live Market Rates (Mianwali & Punjab)</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Petrol (Super)</span><span class="font-bold text-emerald-900">Rs 279.75</span></div>
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Gold (24K)</span><span class="font-bold text-emerald-900">Rs 242,500</span></div>
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span>Cement Bag</span><span class="font-bold text-emerald-900">Rs 1,350</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Secure View -->
-        <div id="admin-view" class="hidden">
-            <div class="bg-white p-8 rounded-2xl shadow-xl border border-emerald-100 text-center">
-                <h3 class="font-bold text-lg text-emerald-950 mb-6">Owner Authentication</h3>
-                <input type="password" id="secret-key" placeholder="Enter Secure Key" class="w-full border-2 border-gray-200 p-3 rounded-lg mb-4 text-center outline-none focus:border-emerald-600">
-                <button onclick="authAdmin()" class="w-full bg-emerald-950 text-white py-3 rounded-lg font-black hover:bg-black transition">VALIDATE ACCESS</button>
+        <!-- Admin Section -->
+        <div id="sec-admin" class="hidden space-y-4">
+            <div id="login-box" class="bg-white p-6 rounded-xl shadow border text-center max-w-sm mx-auto">
+                <h3 class="font-bold text-gray-800 mb-3">Bilawal Khan Niazi - Admin Access</h3>
+                <input type="password" id="pass-input" placeholder="Enter Secret Code" class="w-full border p-2.5 rounded text-center text-sm mb-3 outline-none focus:ring-2 focus:ring-emerald-600">
+                <button onclick="verifyLogin()" class="w-full bg-emerald-950 text-white py-2.5 rounded font-bold text-sm">Login Dashboard</button>
             </div>
-            
-            <div id="dashboard" class="hidden mt-6 bg-emerald-50 p-6 rounded-2xl">
-                <h2 class="font-black text-emerald-900 mb-4">Welcome, Bilawal Khan Niazi</h2>
-                <p class="text-sm">Yahan se aap system ke rates control kar sakte hain.</p>
-                <button onclick="location.reload()" class="mt-4 text-xs text-red-600 font-bold underline">Logout System</button>
+
+            <div id="dash-box" class="hidden bg-white p-6 rounded-xl shadow border">
+                <h3 class="font-bold text-emerald-900 text-lg mb-2">Welcome Back, Bilawal!</h3>
+                <p class="text-xs text-gray-500 mb-4">Aapka admin panel successfully unlock ho chuka hai.</p>
+                <button onclick="location.reload()" class="bg-red-600 text-white text-xs px-4 py-2 rounded font-bold">Lock / Logout</button>
             </div>
         </div>
+
     </main>
 
-    <footer class="text-center py-6 text-[10px] text-gray-400">
-        <p>© 2026 RateDost PK - Built for Precision.</p>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-4 text-xs mt-6">
+        <p>© 2026 RateDost PK. All Rights Reserved.</p>
+        <p class="text-amber-400 font-bold mt-1">Developed & Managed by Bilawal Khan Niazi</p>
     </footer>
 
     <script>
-        // Highly secured password logic
-        const SECURE_KEY = "Khan123$$$M";
+        const MY_SECRET = "Khan123$$$M";
 
-        function toggleAdmin() {
-            document.getElementById('public-view').classList.add('hidden');
-            document.getElementById('admin-view').classList.remove('hidden');
+        function showSection(sec) {
+            document.getElementById('sec-home').classList.add('hidden');
+            document.getElementById('sec-admin').classList.add('hidden');
+            document.getElementById('sec-' + sec).classList.remove('hidden');
         }
 
-        function authAdmin() {
-            let input = document.getElementById('secret-key').value;
-            if(input === SECURE_KEY) {
-                document.getElementById('admin-view').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                alert("Access Granted: Bilawal Khan Niazi");
+        function verifyLogin() {
+            let val = document.getElementById('pass-input').value;
+            if(val === MY_SECRET) {
+                document.getElementById('login-box').classList.add('hidden');
+                document.getElementById('dash-box').classList.remove('hidden');
+                alert("Access Granted: Welcome Bilawal Khan Niazi");
             } else {
-                alert("ERROR: Security Breach Attempt Logged!");
+                alert("Ghalt Password! Access Denied.");
             }
         }
     </script>
