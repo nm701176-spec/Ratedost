@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="ur-PK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RateDost — Pakistan ke har shehar ke official government rates aur market rates, ek jagah. Farq check karo, calculators use karo.">
+<meta name="theme-color" content="#0B5D39">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22RateDost%22%2C%22short_name%22%3A%22RateDost%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F6F3EA%22%2C%22theme_color%22%3A%22%230B5D39%22%7D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B5D39'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23F3E6BC' font-family='Georgia,serif'%3ER%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="RateDost — Government & Market Rates">
+<meta property="og:description" content="Pakistan ke har shehar ke official aur market rates, ek jagah.">
+<meta property="og:type" content="website">
+<title>RateDost — Government &amp; Market Rates, Ek Jagah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F3EA; --paper:#FFFFFF; --ink:#132A1E; --ink-soft:#4A5750;
+    --green:#0B5D39; --green-dark:#083E27; --green-tint:#E7EFE9;
+    --gold:#B8901F; --gold-light:#F3E6BC; --up:#A6382B; --down:#0B5D39;
+    --line:#E1DACB; --radius:14px;
+    --shadow:0 1px 2px rgba(19,42,30,.06), 0 8px 24px -12px rgba(19,42,30,.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans', system-ui, sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Fraunces', serif;font-weight:600;letter-spacing:-.01em;margin:0;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ::selection{background:var(--gold-light);}
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--green);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:200;}
+  .skip-link:focus{left:0;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
+  header.site{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--line);}
+  .header-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(155deg,var(--green),var(--green-dark));display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-family:'Fraunces',serif;font-weight:700;font-size:18px;flex:none;}
+  .brand-text .name{font-family:'Fraunces',serif;font-weight:700;font-size:20px;line-height:1;}
+  .brand-text .tag{font-size:11px;color:var(--ink-soft);letter-spacing:.03em;}
+  .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .city-select{
+    display:flex;align-items:center;gap:6px;background:var(--green-tint);border:1px solid var(--line);
+    border-radius:999px;padding:6px 12px;font-size:13px;
+  }
+  .city-select select{border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--green-dark);outline:none;}
+  nav.main{display:flex;gap:4px;flex-wrap:wrap;}
+  nav.main button{background:none;border:none;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;gap:6px;transition:background .15s,color .15s;}
+  nav.main button:hover{background:var(--green-tint);color:var(--ink);}
+  nav.main button.active{background:var(--green);color:#fff;}
+
+  .ticker-wrap{background:var(--green-dark);overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--green);}
+  .ticker-track{display:inline-flex;animation:scrollTicker 38s linear infinite;padding:8px 0;}
+  .ticker-wrap:hover .ticker-track{animation-play-state:paused;}
+  @keyframes scrollTicker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+  .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 26px;border-right:1px solid rgba(243,230,188,.18);color:var(--gold-light);font-size:13px;}
+  .ticker-item .t-name{color:#fff;font-weight:600;}
+  .ticker-item .t-up{color:#F3A79A;}
+  .ticker-item .t-down{color:#9FE0BE;}
+  @media(prefers-reduced-motion:reduce){.ticker-track{animation:none;}.ticker-wrap{overflow-x:auto;}}
+
+  main{max-width:1180px;margin:0 auto;padding:36px 24px 80px;}
+  .view{display:none;}
+  .view.active{display:block;animation:fadeIn .25s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:10px;}
+  .eyebrow::before{content:"";width:16px;height:1px;background:var(--gold);}
+  .demo-banner{background:var(--gold-light);border:1px solid var(--gold);color:#5C4813;border-radius:10px;padding:10px 16px;font-size:13px;margin:0 0 28px;display:flex;gap:10px;align-items:flex-start;}
+  .current-city-note{font-size:13px;color:var(--ink-soft);margin:0 0 18px;}
+  .current-city-note strong{color:var(--green-dark);}
+
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:end;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--line);}
+  .hero h1{font-size:clamp(30px,4vw,44px);line-height:1.06;}
+  .hero p.lede{color:var(--ink-soft);font-size:16px;line-height:1.6;margin-top:14px;max-width:52ch;}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .stat-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px;}
+  .stat-box .k{font-family:'IBM Plex Mono';font-size:22px;font-weight:600;color:var(--green);}
+  .stat-box .l{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
+  .section-head h2{font-size:24px;}
+  .search-box{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-width:220px;}
+  .search-box input{border:none;outline:none;background:none;font-size:14px;width:100%;font-family:inherit;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .rate-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative;}
+  .fav-star{position:absolute;top:14px;right:14px;background:none;border:none;font-size:17px;cursor:pointer;line-height:1;padding:2px;}
+  .fav-star.active{filter:none;}
+  .share-btn{background:none;border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--ink-soft);}
+  .share-btn:hover{background:var(--green-tint);}
+  .rate-card .rc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .rate-card .rc-name{font-weight:600;font-size:15px;}
+  .rate-card .rc-cat{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .badge-trend{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;display:flex;align-items:center;gap:3px;flex:none;}
+  .badge-trend.up{background:#FBEAE7;color:var(--up);}
+  .badge-trend.down{background:#E4F1EA;color:var(--down);}
+  .badge-trend.flat{background:var(--green-tint);color:var(--ink-soft);}
+  .rc-rates{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .rc-rates .r-lbl{font-size:11px;color:var(--ink-soft);}
+  .rc-rates .r-val{font-family:'IBM Plex Mono';font-size:17px;font-weight:600;margin-top:2px;}
+  .rc-foot{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:11px;color:var(--ink-soft);display:flex;justify-content:space-between;}
+
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;}
+  .cat-tile{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:left;display:flex;flex-direction:column;gap:6px;transition:transform .15s, box-shadow .15s;}
+  .cat-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+  .cat-tile .ic{font-size:26px;}
+  .cat-tile .cn{font-weight:600;font-size:15px;}
+  .cat-tile .cc{font-size:12px;color:var(--ink-soft);}
+  .back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);padding:7px 13px;border-radius:999px;font-size:13px;color:var(--ink-soft);margin-bottom:18px;}
+  .back-btn:hover{background:var(--green-tint);}
+
+  .compare-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:12px;align-items:center;}
+  .compare-card + .compare-card{margin-top:10px;}
+  .compare-card .cc-name{font-weight:600;}
+  .compare-card .cc-unit{font-size:11px;color:var(--ink-soft);}
+  .compare-col .l{font-size:11px;color:var(--ink-soft);}
+  .compare-col .v{font-family:'IBM Plex Mono';font-weight:600;font-size:15px;}
+  .diff-pos{color:var(--up);}
+  .diff-neg{color:var(--down);}
+  @media(max-width:760px){.compare-card{grid-template-columns:1fr 1fr;}}
+
+  .calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+  .calc-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+  .calc-card h3{font-size:17px;margin-bottom:4px;}
+  .calc-card p.desc{font-size:12.5px;color:var(--ink-soft);margin:0 0 14px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;}
+  .field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-family:'IBM Plex Mono';font-size:14px;background:var(--bg);}
+  .calc-btn{background:var(--green);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;font-size:13.5px;width:100%;}
+  .calc-btn:hover{background:var(--green-dark);}
+  .calc-result{margin-top:14px;background:var(--green-tint);border-radius:8px;padding:12px 14px;font-family:'IBM Plex Mono';font-size:15px;color:var(--green-dark);font-weight:600;min-height:20px;}
+
+  /* Comments */
+  .comments-wrap{margin-top:46px;padding-top:30px;border-top:1px solid var(--line);}
+  .ad-slot{margin-top:26px;}
+  .ad-slot .ad-placeholder{
+    border:1px dashed var(--line);border-radius:var(--radius);padding:22px;text-align:center;
+    color:var(--ink-soft);font-size:12px;background:var(--paper);
+  }
+  .ad-slot-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:6px;}
+  .comment-form{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:18px;}
+  .comment-form .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:10px;}
+  .comment-form .field textarea{font-family:'IBM Plex Sans';min-height:60px;resize:vertical;}
+  .comment-list{display:flex;flex-direction:column;gap:10px;}
+  .comment-item{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:13px 16px;}
+  .comment-item .c-top{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);margin-bottom:5px;flex-wrap:wrap;gap:6px;}
+  .comment-item .c-who{font-weight:600;color:var(--ink);}
+  .comment-item .c-rate{font-family:'IBM Plex Mono';color:var(--green-dark);font-weight:600;}
+  .comment-item .c-text{font-size:13.5px;line-height:1.5;}
+  .unverified-tag{font-size:10.5px;background:var(--gold-light);color:#5C4813;padding:2px 7px;border-radius:999px;font-weight:600;}
+
+  .admin-gate{max-width:360px;margin:60px auto;text-align:center;}
+  .admin-gate input{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:8px;margin:14px 0;font-family:'IBM Plex Mono';}
+  .admin-panel{display:grid;grid-template-columns:1fr;gap:24px;}
+  .admin-tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap;}
+  .admin-tabs button{background:none;border:none;padding:10px 4px;font-size:14px;font-weight:500;color:var(--ink-soft);border-bottom:2px solid transparent;margin-right:14px;}
+  .admin-tabs button.active{color:var(--green);border-bottom-color:var(--green);}
+  .admin-sub{display:none;}
+  .admin-sub.active{display:block;}
+  table.admin-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  table.admin-table th,table.admin-table td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line);}
+  table.admin-table th{background:var(--green-tint);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);}
+  table.admin-table tr:last-child td{border-bottom:none;}
+  .row-actions{display:flex;gap:8px;}
+  .row-actions button{background:none;border:1px solid var(--line);border-radius:6px;padding:4px 9px;font-size:12px;}
+  .row-actions button.danger{color:var(--up);border-color:#EBC9C3;}
+  .row-actions button:hover{background:var(--green-tint);}
+  .form-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px;}
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+  .form-grid .field input,.form-grid .field select{font-family:'IBM Plex Sans';}
+  .toggle-row{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap;}
+  .save-btn{background:var(--green);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13.5px;margin-top:6px;}
+  .save-btn:hover{background:var(--green-dark);}
+  .status-msg{font-size:12.5px;margin-top:8px;color:var(--green);min-height:16px;}
+  .ai-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+  .ai-box textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:inherit;font-size:14px;resize:vertical;background:var(--bg);}
+  .ai-note{background:#FBEAE7;border:1px solid #EBC9C3;color:#7A2C22;border-radius:8px;padding:12px 14px;font-size:12.5px;margin-top:14px;line-height:1.55;}
+  .ai-pending{border:1px dashed var(--line);border-radius:8px;padding:12px;margin-top:12px;font-size:13px;}
+  .ai-pending .approve-row{display:flex;gap:8px;margin-top:8px;}
+  .ai-pending .approve-row button{padding:6px 12px;border-radius:6px;border:1px solid var(--line);font-size:12px;}
+  .ai-pending .approve-row button.go{background:var(--green);color:#fff;border-color:var(--green);}
+
+  footer.site{border-top:1px solid var(--line);padding:26px 24px;text-align:center;font-size:12px;color:var(--ink-soft);}
+  footer.site .owner{font-weight:600;color:var(--ink);margin-top:4px;font-size:12.5px;}
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr;}
+    .header-inner{flex-direction:column;align-items:flex-start;gap:10px;}
+    nav.main{width:100%;overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Seedha content par jaayen</a>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div class="brand-text">
+        <div class="name">RateDost</div>
+        <div class="tag">Sarkari aur Bazaar rates, ek jagah</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="city-select">
+        📍 <select id="citySelect"></select>
+      </div>
+      <nav class="main" id="mainNav">
+        <button data-view="home" class="active">🏠 Home</button>
+        <button data-view="gov">🏛️ Government Rates</button>
+        <button data-view="market">🛒 Market Rates</button>
+        <button data-view="calc">🧮 Calculators</button>
+        <button data-view="admin">⚙️ Admin</button>
+      </nav>
+    </div>
+  </div>
+  <div class="ticker-wrap" aria-label="Live rate ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HOME ===================== -->
+  <section class="view active" id="view-home">
+    <p class="current-city-note">Rates dikhaye ja rahe hain: <strong id="homeCityLabel">—</strong> ke liye. Upar se city badal sakte ho.</p>
+
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Roz ki zaroorat, ek nazar mein</div>
+        <h1>Sarkari rate aur bazaar rate ka farq, aik click mein.</h1>
+        <p class="lede">RateDost har city ke liye alag alag official government rate aur asal market rate saath saath dikhata hai.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box"><div class="k mono" id="statItems">0</div><div class="l">Total tracked items</div></div>
+        <div class="stat-box"><div class="k mono" id="statUp">0</div><div class="l">Aaj rate mein izafa</div></div>
+        <div class="stat-box"><div class="k mono" id="statDown">0</div><div class="l">Aaj rate mein kami</div></div>
+        <div class="stat-box"><div class="k mono" id="statCats">0</div><div class="l">Categories</div></div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Aaj ke featured rates</h2>
+      <div class="search-box"><span>🔎</span><input type="text" id="homeSearch" placeholder="Item dhoondo, jaise Petrol..."></div>
+    </div>
+    <div class="grid" id="homeGrid"></div>
+    <div id="adSlotHome" class="ad-slot"></div>
+  </section>
+
+  <!-- ===================== GOVERNMENT RATES ===================== -->
+  <section class="view" id="view-gov">
+    <div id="govCategoryView">
+      <div class="eyebrow">Official notified rates</div>
+      <h2 style="font-size:26px;margin-bottom:6px;">Government Rates — Category chuno</h2>
+      <p class="current-city-note">City: <strong id="govCityLabel">—</strong></p>
+      <div class="cat-grid" id="govCatGrid"></div>
+    </div>
+    <div id="govItemsView" style="display:none;">
+      <button class="back-btn" id="govBackBtn">← Categories par wapis</button>
+      <h2 id="govCatTitle" style="font-size:24px;margin-bottom:16px;"></h2>
+      <div id="govItemsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== MARKET RATES ===================== -->
+  <section class="view" id="view-market">
+    <div class="eyebrow">Government vs. Bazaar</div>
+    <h2 style="font-size:26px;margin-bottom:6px;">Market Rates</h2>
+    <p class="current-city-note">City: <strong id="marketCityLabel">—</strong> · Official rate aur aaj ka bazaar rate — farq turant nazar aayega.</p>
+    <div class="search-box" style="margin-bottom:18px;max-width:320px;"><span>🔎</span><input type="text" id="marketSearch" placeholder="Item dhoondo..."></div>
+    <div id="marketList"></div>
+    <div id="adSlotMarket" class="ad-slot"></div>
+
+    <div class="comments-wrap">
+      <div class="eyebrow">Community reports</div>
+      <h2 style="font-size:22px;margin-bottom:6px;">Log kya rate bata rahe hain?</h2>
+      <p style="font-size:13px;color:var(--ink-soft);margin:0 0 16px;">Ye sab <strong>unverified user reports</strong> hain — RateDost inko official rate nahi maanta, sirf ek aam raaye ke tor par dikhata hai.</p>
+
+      <div class="comment-form">
+        <div class="form-grid">
+          <div class="field"><label>Aapka naam (optional)</label><input type="text" id="cm-name" placeholder="e.g. Ahmed"></div>
+          <div class="field"><label>Item</label><select id="cm-item"></select></div>
+          <div class="field"><label>Aapke shehar mein rate (Rs.)</label><input type="number" id="cm-rate" placeholder="e.g. 285" min="0"></div>
+        </div>
+        <div class="field"><label>Comment</label><textarea id="cm-text" placeholder="Jaise: Hamare mohalle mein aaj yehi rate chal raha hai..."></textarea></div>
+        <button class="save-btn" onclick="postComment()">Comment post karo</button>
+        <div class="status-msg" id="commentMsg"></div>
+      </div>
+
+      <div class="comment-list" id="commentList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== CALCULATORS ===================== -->
+  <section class="view" id="view-calc">
+    <div class="eyebrow">Apna hisaab lagao</div>
+    <h2 style="font-size:26px;margin-bottom:20px;">Calculators</h2>
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>⛽ Fuel Cost Calculator</h3>
+        <p class="desc">Safar ki total fuel cost nikaalo, apni city ke rate ke hisaab se.</p>
+        <div class="field"><label>Fuel type</label><select id="fuelType"><option value="petrol">Petrol</option><option value="diesel">Diesel</option></select></div>
+        <div class="field"><label>Total distance (km)</label><input type="number" id="fuelDist" placeholder="e.g. 120" min="0"></div>
+        <div class="field"><label>Mileage (km per litre)</label><input type="number" id="fuelMileage" placeholder="e.g. 15" min="0.1" step="0.1"></div>
+        <button class="calc-btn" onclick="calcFuel()">Cost nikaalo</button>
+        <div class="calc-result" id="fuelResult">—</div>
+      </div>
+      <div class="calc-card">
+        <h3>🥇 Gold Value Calculator</h3>
+        <p class="desc">Tola ya gram ke hisaab se gold ki value nikaalo (official rate par).</p>
+        <div class="field"><label>Unit</label><select id="goldUnit"><option value="tola">Tola</option><option value="gram">Gram</option></select></div>
+        <div class="field"><label>Quantity</label><input type="number" id="goldQty" placeholder="e.g. 2" min="0" step="0.01"></div>
+        <button class="calc-btn" onclick="calcGold()">Value nikaalo</button>
+        <div class="calc-result" id="goldResult">—</div>
+      </div>
+      <div class="calc-card">
+        <h3>🏗️ Construction Cost (Cement)</h3>
+        <p class="desc">Cement bags ki total cost, market rate ke hisaab se.</p>
+        <div class="field"><label>Number of bags</label><input type="number" id="cementBags" placeholder="e.g. 50" min="0"></div>
+        <div class="field"><label>Rate source</label><select id="cementSrc"><option value="gov">Government rate</option><option value="market">Market rate</option></select></div>
+        <button class="calc-btn" onclick="calcCement()">Cost nikaalo</button>
+        <div class="calc-result" id="cementResult">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ADMIN ===================== -->
+  <section class="view" id="view-admin">
+    <div id="adminGate" class="admin-gate">
+      <div class="eyebrow" style="justify-content:center;">Protected area</div>
+      <h2 style="font-size:22px;">Admin Login</h2>
+      <p style="color:var(--ink-soft);font-size:13px;margin-top:8px;">Sirf apna password daalo.<br>(Yeh sirf client-side demo hai — production ke liye proper auth/backend zaroori hai.)</p>
+      <input type="password" id="adminPass" placeholder="Password daalo">
+      <button class="save-btn" style="width:100%;" onclick="tryAdminLogin()">Login</button>
+      <div class="status-msg" id="adminLoginMsg"></div>
+    </div>
+
+    <div id="adminPanel" class="admin-panel" style="display:none;">
+      <div class="section-head">
+        <h2>Admin Panel</h2>
+        <button class="back-btn" onclick="adminLogout()">Logout</button>
+      </div>
+      <p class="current-city-note">Rates is waqt is city ke liye edit ho rahe hain: <strong id="adminCityLabel">—</strong> (upar navbar se city badlo).</p>
+
+      <div class="admin-tabs">
+        <button data-sub="rates" class="active">Rates Management</button>
+        <button data-sub="cats">Categories</button>
+        <button data-sub="cities">Cities</button>
+        <button data-sub="home">Homepage</button>
+        <button data-sub="comments">Comments</button>
+        <button data-sub="sources">🔗 Reference Sources</button>
+        <button data-sub="earnings">💰 Earnings</button>
+        <button data-sub="backup">💾 Backup</button>
+        <button data-sub="ai">AI Assistant</button>
+      </div>
+
+      <div class="admin-sub active" id="sub-rates">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:12px;">Bulk add / update (ek saath kai items)</h3>
+          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 10px;">Har line mein ye order likho (comma se separate): <span class="mono">Name, Category-key, Sub-category, Unit, Government Rate, Market Rate, Source</span>. Sub-category ya source khali chhod sakte ho. Rates is waqt select ki hui city ke liye lagengi (upar navbar se city check karo). Agar naam pehle se maujood hai to wo update ho jayega, warna naya item ban jayega.</p>
+          <div class="field"><textarea id="bulkInput" placeholder="Chana Dal, food, Pulses, /kg, 260, 280, Food Dept
+Cement, construction, , /bag, 1450, 1600, Provincial rate list"></textarea></div>
+          <p style="font-size:11.5px;color:var(--ink-soft);margin:6px 0 0;">Available category keys: <span class="mono" id="catKeysHint"></span></p>
+          <button class="save-btn" onclick="bulkImport()">Sab items add/update karo</button>
+          <div class="status-msg" id="bulkMsg"></div>
+        </div>
+
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:12px;" id="itemFormTitle">Naya item add karo (single)</h3>
+          <div class="form-grid">
+            <div class="field"><label>Name</label><input type="text" id="f-name"></div>
+            <div class="field"><label>Category</label><select id="f-cat"></select></div>
+            <div class="field"><label>Sub-category (optional)</label><input type="text" id="f-subcat" placeholder="e.g. Pulses"></div>
+            <div class="field"><label>Unit (jaise /L, /bag, /tola)</label><input type="text" id="f-unit"></div>
+            <div class="field"><label>Government rate — <span id="f-gov-city">this city</span> (Rs.)</label><input type="number" id="f-gov" min="0"></div>
+            <div class="field"><label>Market rate — <span id="f-market-city">this city</span> (Rs.)</label><input type="number" id="f-market" min="0"></div>
+            <div class="field"><label>Source</label><input type="text" id="f-source" placeholder="e.g. OGRA notification"></div>
+          </div>
+          <div class="toggle-row" style="margin:10px 0;">
+            <input type="checkbox" id="f-featured"> <label for="f-featured">Homepage par featured</label>
+            <input type="checkbox" id="f-enabled" checked> <label for="f-enabled">Enabled</label>
+          </div>
+          <input type="hidden" id="f-id">
+          <button class="save-btn" onclick="saveItem()">Save item</button>
+          <button class="back-btn" style="display:none;" id="cancelEditBtn" onclick="cancelEdit()">Cancel edit</button>
+          <div class="status-msg" id="itemFormMsg"></div>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Category</th><th id="th-gov">Gov Rate</th><th id="th-market">Market Rate</th><th>Updated</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="adminItemsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-sub" id="sub-cats">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:12px;">Nayi category add karo</h3>
+          <div class="form-grid">
+            <div class="field"><label>Icon (emoji)</label><input type="text" id="c-icon" placeholder="🍚"></div>
+            <div class="field"><label>Name</label><input type="text" id="c-name"></div>
+            <div class="field"><label>Key (unique, no space)</label><input type="text" id="c-key" placeholder="food"></div>
+          </div>
+          <button class="save-btn" onclick="saveCategory()">Save category</button>
+          <div class="status-msg" id="catFormMsg"></div>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>Icon</th><th>Name</th><th>Key</th><th>Items</th><th>Actions</th></tr></thead>
+          <tbody id="adminCatsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-sub" id="sub-cities">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:12px;">Nayi city add karo</h3>
+          <div class="form-grid">
+            <div class="field"><label>City name</label><input type="text" id="ct-name" placeholder="e.g. Sialkot"></div>
+            <div class="field"><label>Key (unique, no space)</label><input type="text" id="ct-key" placeholder="sialkot"></div>
+          </div>
+          <button class="save-btn" onclick="saveCity()">Save city</button>
+          <div class="status-msg" id="cityFormMsg"></div>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>City</th><th>Key</th><th>Actions</th></tr></thead>
+          <tbody id="adminCitiesBody"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-sub" id="sub-home">
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px;">Yahan se control karo kaunse items Home page par "featured" show hon.</p>
+        <table class="admin-table">
+          <thead><tr><th>Item</th><th>Category</th><th>Featured on Home</th></tr></thead>
+          <tbody id="adminHomeBody"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-sub" id="sub-comments">
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px;">User comments moderate karo — spam ya galat entries delete kar sakte ho.</p>
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Item</th><th>City</th><th>Rate</th><th>Comment</th><th>Actions</th></tr></thead>
+          <tbody id="adminCommentsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-sub" id="sub-backup">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:10px;">💾 Data Backup (zaroori!)</h3>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin:0 0 14px;">
+            ⚠️ Saara data (items, rates, categories, cities, comments) sirf isi phone/browser mein save hota hai. Agar browser data clear ho gaya ya naya phone liya, sab kuch khatam ho sakta hai. <strong>Isliye hafte mein ek baar Export zaroor karo</strong> aur file kahin safe rakho (Google Drive/WhatsApp apne aap ko bhej do).
+          </p>
+          <button class="save-btn" onclick="exportData()">⬇️ Sara data export karo (.json)</button>
+          <div class="status-msg" id="exportMsg"></div>
+          <hr style="border:none;border-top:1px solid var(--line);margin:20px 0;">
+          <h3 style="font-size:15px;margin-bottom:10px;">Import (purani backup wapis lagao)</h3>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">⚠️ Ye current data ko overwrite kar dega.</p>
+          <div class="field"><input type="file" id="importFile" accept="application/json"></div>
+          <button class="save-btn" onclick="importData()">⬆️ Backup se restore karo</button>
+          <div class="status-msg" id="importMsg"></div>
+        </div>
+      </div>
+
+      <div class="admin-sub" id="sub-sources">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:10px;">🔗 Official rate check karne ke liye verified sources</h3>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin:0 0 14px;">Yahan click karke asal government rate dekho, phir Rates Management ke "Bulk add" box se RateDost mein daal do.</p>
+          <ul style="font-size:13.5px;line-height:2.1;margin:0;padding-left:20px;">
+            <li>⛽ <strong>Fuel (Petrol/Diesel):</strong> <a href="https://ogra.com.pk/" target="_blank" rel="noopener">ogra.com.pk</a> — OGRA ki official petroleum notifications</li>
+            <li>🍚 <strong>Food / essential items (weekly Sensitive Price Indicator):</strong> <a href="https://www.pbs.gov.pk/price-statistics/" target="_blank" rel="noopener">pbs.gov.pk/price-statistics</a> — Pakistan Bureau of Statistics</li>
+            <li>🏗️ <strong>Construction / Cement:</strong> apni province ke Price Control / District administration ki notification list check karo</li>
+            <li>🌾 <strong>Agriculture (wheat support price wagera):</strong> apne province ke Food Department ki official website</li>
+          </ul>
+          <p style="font-size:11.5px;color:var(--ink-soft);margin-top:14px;">Note: ye general reference links hain — is HTML file ke andar koi live data auto-fetch nahi hota, khud jaake number check karke Admin se daalna hoga jab tak backend nahi jud jata.</p>
+        </div>
+      </div>
+
+      <div class="admin-sub" id="sub-earnings">
+        <div class="form-card">
+          <h3 style="font-size:15px;margin-bottom:10px;">💰 RateDost se kamai kaise ho sakti hai?</h3>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin:0 0 14px;">
+            Chaar aam tareeke hain jo is tarah ki rate/price websites use karti hain:
+          </p>
+          <ul style="font-size:13px;color:var(--ink);line-height:1.9;margin:0 0 16px;padding-left:20px;">
+            <li><strong>Ads (Google AdSense wagera):</strong> Apni site par ad network ka account banao, unka code milta hai, wo neeche wale box mein paste kar dena — har page par dikhega. Traffic zyada hoga to kamai zyada.</li>
+            <li><strong>Sponsored listings:</strong> Kisi dukaan/business ko apni category mein "Featured" ya highlighted spot bech sakte ho (jaise "Sponsored: XYZ Cement Store").</li>
+            <li><strong>Premium/VIP features:</strong> Free users ko basic rates milein, paid users ko extra cheezein milein (jaise SMS/WhatsApp rate alerts, city-wise export, ads-free view).</li>
+            <li><strong>Affiliate links:</strong> Jahan log calculator use karke kharidari plan karte hain (jaise cement, gold), wahan kisi online store ka affiliate link laga do — har sale par commission mile.</li>
+          </ul>
+          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 14px;">Sabse pehle aam tor par log <strong>Ads</strong> se shuru karte hain kyunke setup sabse aasan hai. Iske liye AdSense (ya kisi bhi ad network) par apni site register karo, approval milne ke baad wo tumhein ek chhota sa HTML/JS code denge — wahi neeche paste karo.</p>
+
+          <div class="field"><label>Ad code (AdSense ya kisi sponsor ka code yahan paste karo)</label><textarea id="adCodeInput" placeholder="&lt;!-- yahan apna ad/sponsor code paste karo --&gt;" style="min-height:100px;font-family:'IBM Plex Mono';"></textarea></div>
+          <button class="save-btn" onclick="saveAdCode()">Ad code save karo</button>
+          <div class="status-msg" id="adCodeMsg"></div>
+          <p style="font-size:11.5px;color:var(--ink-soft);margin-top:10px;">Ye code Home page aur Market Rates page par ek dedicated "Sponsored" slot mein show hoga. Jab tak koi code nahi hoga, wahan sirf khaali placeholder dikhega — koi fake ad nahi lagega.</p>
+        </div>
+      </div>
+
+      <div class="admin-sub" id="sub-ai">
+        <div class="ai-box">
+          <h3 style="font-size:15px;margin-bottom:6px;">AI Rate Assistant</h3>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">Likho, jaise: "Petrol ka government rate 278 update karo" — AI ek <em>proposed change</em> is currently selected city ke liye banayega, jo tum khud approve karoge.</p>
+          <textarea id="aiInput" placeholder="Apni request likho..."></textarea>
+          <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+            <button class="save-btn" style="width:auto;" onclick="runAiAssistant()">Request bhejo</button>
+            <button class="back-btn" onclick="checkAllRates()">🔍 Aaj ke sab rates check karo</button>
+          </div>
+          <div id="aiPendingArea"></div>
+          <div class="ai-note"><strong>Zaroori note:</strong> Ye box sirf proposal banata hai — koi live official source verify nahi karta, kyunke ye website sirf frontend hai. 100% automatic government-rate sync ke liye backend/API chahiye.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  RateDost — MVP demo. Rates yahan sample hain jab tak real backend/API se sync na ho.
+  <div class="owner">Founder &amp; Owner: Bilawal Khan Niazi</div>
+</footer>
+
+<script>
+/* =====================================================================
+   DATA LAYER
+   ===================================================================== */
+const DEFAULT_CATEGORIES = [
+  {key:"food", icon:"🍚", name:"Food"},
+  {key:"construction", icon:"🏗️", name:"Construction"},
+  {key:"fuel", icon:"⛽", name:"Fuel"},
+  {key:"energy", icon:"⚡", name:"Electricity / Energy"},
+  {key:"agriculture", icon:"🌾", name:"Agriculture"},
+  {key:"medicines", icon:"💊", name:"Medicines"},
+  {key:"transport", icon:"🚛", name:"Transport"},
+  {key:"other", icon:"📦", name:"Other Government Rates"},
+];
+
+const DEFAULT_CITIES = [
+  {key:"lahore", name:"Lahore"},
+  {key:"karachi", name:"Karachi"},
+  {key:"islamabad", name:"Islamabad"},
+  {key:"rawalpindi", name:"Rawalpindi"},
+  {key:"faisalabad", name:"Faisalabad"},
+  {key:"multan", name:"Multan"},
+  {key:"peshawar", name:"Peshawar"},
+  {key:"quetta", name:"Quetta"},
+];
+
+function emptyRates(){
+  const r = {};
+  DEFAULT_CITIES.forEach(c => r[c.key] = {gov:0, market:0});
+  return r;
+}
+
+const DEFAULT_ITEMS = [
+  // Fuel
+  {id:"petrol", name:"Petrol", category:"fuel", subcategory:"", unit:"/Litre", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:true, enabled:true},
+  {id:"diesel", name:"Diesel (HSD)", category:"fuel", subcategory:"", unit:"/Litre", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:true, enabled:true},
+  {id:"kerosene", name:"Kerosene Oil", category:"fuel", subcategory:"", unit:"/Litre", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"lpg", name:"LPG Cylinder", category:"fuel", subcategory:"", unit:"/11kg cylinder", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"cng", name:"CNG", category:"fuel", subcategory:"", unit:"/kg", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Construction
+  {id:"cement", name:"Cement", category:"construction", subcategory:"", unit:"/Bag (50kg)", rates:emptyRates(), source:"Provincial rate list", updated:"2026-08-01", featured:true, enabled:true},
+  {id:"steel-bar", name:"Steel Bar (Grade 60)", category:"construction", subcategory:"", unit:"/40kg", rates:emptyRates(), source:"Steel Melters Association", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"bricks", name:"Bricks", category:"construction", subcategory:"", unit:"/1000 pcs", rates:emptyRates(), source:"District rate list", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"sand", name:"Sand (Reti)", category:"construction", subcategory:"", unit:"/100 cft", rates:emptyRates(), source:"District rate list", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"crush", name:"Crush / Gravel (Bajri)", category:"construction", subcategory:"", unit:"/100 cft", rates:emptyRates(), source:"District rate list", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"paint", name:"Wall Paint", category:"construction", subcategory:"", unit:"/gallon", rates:emptyRates(), source:"Market survey", updated:"2026-08-01", featured:false, enabled:true},
+  // Food — Grains
+  {id:"wheat", name:"Wheat", category:"food", subcategory:"Grains", unit:"/40kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"flour", name:"Flour (Atta)", category:"food", subcategory:"Grains", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"rice-basmati", name:"Rice (Basmati)", category:"food", subcategory:"Grains", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"rice-irri", name:"Rice (Irri)", category:"food", subcategory:"Grains", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Food — Pulses
+  {id:"chana-dal", name:"Chana Dal", category:"food", subcategory:"Pulses", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"masoor-dal", name:"Masoor Dal", category:"food", subcategory:"Pulses", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"moong-dal", name:"Moong Dal", category:"food", subcategory:"Pulses", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Food — Staples
+  {id:"sugar", name:"Sugar", category:"food", subcategory:"Staples", unit:"/kg", rates:emptyRates(), source:"Sugar Advisory Board", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"cooking-oil", name:"Cooking Oil", category:"food", subcategory:"Staples", unit:"/Litre", rates:emptyRates(), source:"Market survey", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"ghee", name:"Ghee (Banaspati)", category:"food", subcategory:"Staples", unit:"/kg", rates:emptyRates(), source:"Market survey", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"tea", name:"Tea (Loose)", category:"food", subcategory:"Staples", unit:"/250g", rates:emptyRates(), source:"Market survey", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"salt", name:"Salt", category:"food", subcategory:"Staples", unit:"/kg", rates:emptyRates(), source:"Market survey", updated:"2026-08-01", featured:false, enabled:true},
+  // Food — Perishables
+  {id:"milk", name:"Milk", category:"food", subcategory:"Perishables", unit:"/Litre", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"eggs", name:"Eggs", category:"food", subcategory:"Perishables", unit:"/dozen", rates:emptyRates(), source:"Poultry Association", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"chicken", name:"Chicken (Broiler)", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"Poultry Association", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"beef", name:"Beef", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"District rate list", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"mutton", name:"Mutton", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"District rate list", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"onion", name:"Onion", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"tomato", name:"Tomato", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"potato", name:"Potato", category:"food", subcategory:"Perishables", unit:"/kg", rates:emptyRates(), source:"Food Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Energy
+  {id:"electricity", name:"Electricity (Unit)", category:"energy", subcategory:"", unit:"/kWh", rates:emptyRates(), source:"NEPRA notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"sui-gas", name:"Sui Gas", category:"energy", subcategory:"", unit:"/MMBTU", rates:emptyRates(), source:"OGRA notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Agriculture
+  {id:"wheat-support", name:"Wheat Support Price", category:"agriculture", subcategory:"", unit:"/40kg", rates:emptyRates(), source:"Provincial Food Dept", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"dap", name:"DAP Fertilizer", category:"agriculture", subcategory:"", unit:"/50kg bag", rates:emptyRates(), source:"Agri Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"urea", name:"Urea Fertilizer", category:"agriculture", subcategory:"", unit:"/50kg bag", rates:emptyRates(), source:"Agri Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Medicines
+  {id:"panadol", name:"Panadol", category:"medicines", subcategory:"", unit:"/strip", rates:emptyRates(), source:"DRAP notified price", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"ors", name:"ORS Sachet", category:"medicines", subcategory:"", unit:"/sachet", rates:emptyRates(), source:"DRAP notified price", updated:"2026-08-01", featured:false, enabled:true},
+  // Transport
+  {id:"bus-fare", name:"Bus Fare", category:"transport", subcategory:"", unit:"/km", rates:emptyRates(), source:"Transport Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  {id:"rickshaw-fare", name:"Rickshaw Fare", category:"transport", subcategory:"", unit:"/km", rates:emptyRates(), source:"Transport Dept notification", updated:"2026-08-01", featured:false, enabled:true},
+  // Other
+  {id:"gold", name:"Gold", category:"other", subcategory:"", unit:"/Tola", rates:emptyRates(), source:"Sarafa Association", updated:"2026-08-01", featured:true, enabled:true},
+  {id:"silver", name:"Silver", category:"other", subcategory:"", unit:"/Tola", rates:emptyRates(), source:"Sarafa Association", updated:"2026-08-01", featured:false, enabled:true},
+];
+
+function loadData(){
+  let cats = JSON.parse(localStorage.getItem("rd_categories") || "null");
+  let items = JSON.parse(localStorage.getItem("rd_items") || "null");
+  let cities = JSON.parse(localStorage.getItem("rd_cities") || "null");
+  let comments = JSON.parse(localStorage.getItem("rd_comments") || "null");
+  let selCity = localStorage.getItem("rd_selected_city");
+  if(!cats){ cats = DEFAULT_CATEGORIES; saveCategories(cats); }
+  if(!cities){ cities = DEFAULT_CITIES; saveCities(cities); }
+  if(!items){ items = DEFAULT_ITEMS; saveItems(items); }
+  if(!comments){ comments = []; saveComments(comments); }
+  if(!selCity || !cities.some(c=>c.key===selCity)) selCity = cities[0].key;
+  return {cats, items, cities, comments, selectedCity: selCity};
+}
+function saveCategories(cats){ localStorage.setItem("rd_categories", JSON.stringify(cats)); }
+function saveItems(items){ localStorage.setItem("rd_items", JSON.stringify(items)); }
+function saveCities(cities){ localStorage.setItem("rd_cities", JSON.stringify(cities)); }
+function saveComments(comments){ localStorage.setItem("rd_comments", JSON.stringify(comments)); }
+function saveSelectedCity(key){ localStorage.setItem("rd_selected_city", key); }
+function saveAdCodeStorage(code){ localStorage.setItem("rd_ad_code", code); }
+function loadAdCodeStorage(){ return localStorage.getItem("rd_ad_code") || ""; }
+
+let STATE = loadData();
+
+function cityRates(item){
+  return (item.rates && item.rates[STATE.selectedCity]) || {gov:0, market:0};
+}
+function trend(item){
+  const r = cityRates(item);
+  if(!r.gov || !r.market) return "flat";
+  if(r.market > r.gov) return "up";
+  if(r.market < r.gov) return "down";
+  return "flat";
+}
+function fmt(n){
+  if(n===undefined || n===null || n==="" || isNaN(n) || Number(n)===0) return "—";
+  return "Rs. " + Number(n).toLocaleString("en-PK", {maximumFractionDigits:2});
+}
+function catName(key){ const c = STATE.cats.find(c=>c.key===key); return c ? c.name : key; }
+function catIcon(key){ const c = STATE.cats.find(c=>c.key===key); return c ? c.icon : "📦"; }
+function cityName(key){ const c = STATE.cities.find(c=>c.key===key); return c ? c.name : key; }
+
+/* =====================================================================
+   CITY SELECTOR
+   ===================================================================== */
+function renderCitySelect(){
+  document.getElementById("citySelect").innerHTML = STATE.cities.map(c=>
+    `<option value="${c.key}" ${c.key===STATE.selectedCity?"selected":""}>${c.name}</option>`).join("");
+}
+document.getElementById("citySelect").addEventListener("change", (e)=>{
+  STATE.selectedCity = e.target.value;
+  saveSelectedCity(STATE.selectedCity);
+  refreshPublicViews();
+  if(document.getElementById("adminPanel").style.display !== "none") renderAdminAll();
+});
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+document.getElementById("mainNav").addEventListener("click", (e)=>{
+  const btn = e.target.closest("button[data-view]");
+  if(!btn) return;
+  showView(btn.dataset.view);
+});
+function showView(view){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("view-"+view).classList.add("active");
+  document.querySelectorAll("#mainNav button").forEach(b=>b.classList.toggle("active", b.dataset.view===view));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* =====================================================================
+   TICKER
+   ===================================================================== */
+function renderTicker(){
+  const enabled = STATE.items.filter(i=>i.enabled);
+  const html = enabled.map(i=>{
+    const r = cityRates(i);
+    const t = trend(i);
+    const arrow = t==="up" ? '<span class="t-up">▲</span>' : t==="down" ? '<span class="t-down">▼</span>' : '—';
+    return `<span class="ticker-item"><span class="t-name">${i.name}</span> (${cityName(STATE.selectedCity)}) ${fmt(r.market||r.gov)}${i.unit} ${arrow}</span>`;
+  }).join("");
+  document.getElementById("tickerTrack").innerHTML = html + html;
+}
+
+/* =====================================================================
+   HOME
+   ===================================================================== */
+function renderHome(filter=""){
+  document.getElementById("homeCityLabel").textContent = cityName(STATE.selectedCity);
+  const items = STATE.items.filter(i=>i.enabled && i.featured && i.name.toLowerCase().includes(filter.toLowerCase()));
+  document.getElementById("homeGrid").innerHTML = items.map(renderCard).join("") || `<p style="color:var(--ink-soft);">Koi featured item nahi mila.</p>`;
+  const all = STATE.items.filter(i=>i.enabled);
+  document.getElementById("statItems").textContent = all.length;
+  document.getElementById("statUp").textContent = all.filter(i=>trend(i)==="up").length;
+  document.getElementById("statDown").textContent = all.filter(i=>trend(i)==="down").length;
+  document.getElementById("statCats").textContent = STATE.cats.length;
+}
+function loadFavorites(){ return JSON.parse(localStorage.getItem("rd_favorites") || "[]"); }
+function saveFavorites(f){ localStorage.setItem("rd_favorites", JSON.stringify(f)); }
+function toggleFavorite(id){
+  let favs = loadFavorites();
+  if(favs.includes(id)) favs = favs.filter(x=>x!==id); else favs.push(id);
+  saveFavorites(favs);
+  renderHome(document.getElementById("homeSearch").value);
+}
+function shareRate(id){
+  const item = STATE.items.find(i=>i.id===id);
+  if(!item) return;
+  const r = cityRates(item);
+  const text = `${item.name} (${cityName(STATE.selectedCity)}): Government ${fmt(r.gov)} · Market ${fmt(r.market)} ${item.unit} — RateDost`;
+  if(navigator.share){ navigator.share({text}).catch(()=>{}); }
+  else { navigator.clipboard?.writeText(text); alert("Copy ho gaya: " + text); }
+}
+
+function renderCard(i){
+  const r = cityRates(i);
+  const t = trend(i);
+  const label = t==="up" ? "↑ Increase" : t==="down" ? "↓ Decrease" : "— No change";
+  const favs = loadFavorites();
+  const isFav = favs.includes(i.id);
+  return `<div class="rate-card">
+    <button class="fav-star" onclick="toggleFavorite('${i.id}')" title="${isFav?'Favorites se hatao':'Favorite karo'}">${isFav ? "⭐" : "☆"}</button>
+    <div class="rc-top">
+      <div><div class="rc-name">${i.name}</div><div class="rc-cat">${catIcon(i.category)} ${catName(i.category)}</div></div>
+      <span class="badge-trend ${t}">${label}</span>
+    </div>
+    <div class="rc-rates">
+      <div><div class="r-lbl">Government</div><div class="r-val">${fmt(r.gov)}</div></div>
+      <div><div class="r-lbl">Market</div><div class="r-val">${fmt(r.market)}</div></div>
+    </div>
+    <div class="rc-foot"><span>${i.unit}</span><span>Updated: ${i.updated||"—"}</span></div>
+    <div style="margin-top:10px;"><button class="share-btn" onclick="shareRate('${i.id}')">📤 Share</button></div>
+  </div>`;
+}
+document.getElementById("homeSearch").addEventListener("input", (e)=>renderHome(e.target.value));
+
+/* =====================================================================
+   GOVERNMENT RATES
+   ===================================================================== */
+function renderGovCategories(){
+  document.getElementById("govCityLabel").textContent = cityName(STATE.selectedCity);
+  document.getElementById("govCatGrid").innerHTML = STATE.cats.map(c=>{
+    const count = STATE.items.filter(i=>i.category===c.key && i.enabled).length;
+    return `<button class="cat-tile" onclick="openGovCategory('${c.key}')">
+      <span class="ic">${c.icon}</span><span class="cn">${c.name}</span><span class="cc">${count} item${count===1?"":"s"}</span>
+    </button>`;
+  }).join("");
+}
+function openGovCategory(key){
+  document.getElementById("govCategoryView").style.display = "none";
+  document.getElementById("govItemsView").style.display = "block";
+  document.getElementById("govCatTitle").textContent = catIcon(key) + " " + catName(key) + " — " + cityName(STATE.selectedCity);
+  const items = STATE.items.filter(i=>i.category===key && i.enabled);
+  const container = document.getElementById("govItemsGrid");
+  if(items.length===0){ container.innerHTML = `<p style="color:var(--ink-soft);">Is category mein abhi koi item nahi.</p>`; return; }
+  const cardHtml = i => {
+    const r = cityRates(i);
+    return `<div class="rate-card">
+      <div class="rc-top"><div><div class="rc-name">${i.name}</div><div class="rc-cat">${i.unit}</div></div></div>
+      <div class="rc-rates" style="grid-template-columns:1fr;">
+        <div><div class="r-lbl">Official government rate</div><div class="r-val">${fmt(r.gov)}</div></div>
+      </div>
+      <div class="rc-foot"><span>Source: ${i.source||"—"}</span><span>${i.updated||"—"}</span></div>
+    </div>`;
+  };
+  const groups = {};
+  items.forEach(i=>{
+    const g = i.subcategory && i.subcategory.trim() ? i.subcategory.trim() : "Other";
+    if(!groups[g]) groups[g] = [];
+    groups[g].push(i);
+  });
+  const groupKeys = Object.keys(groups).sort((a,b)=> a==="Other" ? 1 : b==="Other" ? -1 : a.localeCompare(b));
+  container.innerHTML = groupKeys.map(g => `
+    <h3 style="font-size:15px;margin:22px 0 10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;">${g}</h3>
+    <div class="grid">${groups[g].map(cardHtml).join("")}</div>
+  `).join("");
+}
+document.getElementById("govBackBtn").addEventListener("click", ()=>{
+  document.getElementById("govCategoryView").style.display = "block";
+  document.getElementById("govItemsView").style.display = "none";
+});
+
+/* =====================================================================
+   MARKET RATES
+   ===================================================================== */
+function renderMarket(filter=""){
+  document.getElementById("marketCityLabel").textContent = cityName(STATE.selectedCity);
+  const items = STATE.items.filter(i=>i.enabled && i.name.toLowerCase().includes(filter.toLowerCase()));
+  document.getElementById("marketList").innerHTML = items.map(i=>{
+    const r = cityRates(i);
+    const diff = (r.market||0) - (r.gov||0);
+    const diffClass = diff > 0 ? "diff-pos" : diff < 0 ? "diff-neg" : "";
+    const diffLabel = diff===0 ? "Barabar" : (diff>0? "+":"") + fmt(diff);
+    return `<div class="compare-card">
+      <div><div class="cc-name">${i.name}</div><div class="cc-unit">${i.unit} · ${catName(i.category)}</div></div>
+      <div class="compare-col"><div class="l">Government</div><div class="v">${fmt(r.gov)}</div></div>
+      <div class="compare-col"><div class="l">Market</div><div class="v">${fmt(r.market)}</div></div>
+      <div class="compare-col"><div class="l">Difference</div><div class="v ${diffClass}">${diffLabel}</div></div>
+    </div>`;
+  }).join("") || `<p style="color:var(--ink-soft);">Koi item nahi mila.</p>`;
+  renderComments();
+  populateCommentItemSelect();
+}
+document.getElementById("marketSearch").addEventListener("input", (e)=>renderMarket(e.target.value));
+
+/* =====================================================================
+   COMMENTS (community reports)
+   ===================================================================== */
+function populateCommentItemSelect(){
+  const sel = document.getElementById("cm-item");
+  if(!sel) return;
+  sel.innerHTML = STATE.items.filter(i=>i.enabled).map(i=>`<option value="${i.id}">${i.name}</option>`).join("");
+}
+function renderComments(){
+  const list = STATE.comments.filter(c=>c.city===STATE.selectedCity).slice().reverse();
+  document.getElementById("commentList").innerHTML = list.map(c=>{
+    const item = STATE.items.find(i=>i.id===c.itemId);
+    return `<div class="comment-item">
+      <div class="c-top">
+        <span><span class="c-who">${c.name || "Anonymous"}</span> · ${item?item.name:c.itemId} · ${cityName(c.city)}</span>
+        <span class="unverified-tag">Unverified user report</span>
+      </div>
+      ${c.rate ? `<div class="c-rate">Reported rate: ${fmt(c.rate)}</div>` : ""}
+      <div class="c-text">${escapeHtml(c.text)}</div>
+    </div>`;
+  }).join("") || `<p style="color:var(--ink-soft);font-size:13px;">Abhi is city ke liye koi comment nahi. Pehla comment tum karo!</p>`;
+}
+function escapeHtml(s){
+  const div = document.createElement("div");
+  div.textContent = s;
+  return div.innerHTML;
+}
+function postComment(){
+  const name = document.getElementById("cm-name").value.trim();
+  const itemId = document.getElementById("cm-item").value;
+  const rate = parseFloat(document.getElementById("cm-rate").value) || null;
+  const text = document.getElementById("cm-text").value.trim();
+  if(!text){ setMsg("commentMsg","Comment likhna zaroori hai.", true); return; }
+  STATE.comments.push({
+    id: "c" + Date.now(),
+    name, itemId, rate, text,
+    city: STATE.selectedCity,
+    date: new Date().toISOString().slice(0,10),
+  });
+  saveComments(STATE.comments);
+  document.getElementById("cm-name").value = "";
+  document.getElementById("cm-rate").value = "";
+  document.getElementById("cm-text").value = "";
+  renderComments();
+  setMsg("commentMsg","Comment post ho gaya ✅");
+}
+
+/* =====================================================================
+   CALCULATORS
+   ===================================================================== */
+function calcFuel(){
+  const type = document.getElementById("fuelType").value;
+  const dist = parseFloat(document.getElementById("fuelDist").value);
+  const mileage = parseFloat(document.getElementById("fuelMileage").value);
+  const item = STATE.items.find(i=>i.id===type);
+  const r = item ? cityRates(item) : {gov:0,market:0};
+  const rate = r.market || r.gov;
+  const box = document.getElementById("fuelResult");
+  if(!dist || !mileage || !rate){ box.textContent = "Distance, mileage aur rate zaroori hai (rate Admin se set karo)."; return; }
+  const litres = dist / mileage;
+  box.textContent = `${litres.toFixed(2)} Litre chahiye · Total cost: ${fmt(litres*rate)}`;
+}
+function calcGold(){
+  const unit = document.getElementById("goldUnit").value;
+  const qty = parseFloat(document.getElementById("goldQty").value);
+  const item = STATE.items.find(i=>i.id==="gold");
+  const box = document.getElementById("goldResult");
+  const r = item ? cityRates(item) : {gov:0};
+  if(!r.gov){ box.textContent = "Gold ka government rate abhi is city ke liye set nahi hai."; return; }
+  if(!qty){ box.textContent = "Quantity daalo."; return; }
+  let ratePerUnit = r.gov;
+  if(unit === "gram") ratePerUnit = r.gov / 11.6638;
+  box.textContent = `Total value: ${fmt(ratePerUnit*qty)}`;
+}
+function calcCement(){
+  const bags = parseFloat(document.getElementById("cementBags").value);
+  const src = document.getElementById("cementSrc").value;
+  const item = STATE.items.find(i=>i.id==="cement");
+  const box = document.getElementById("cementResult");
+  const r = item ? cityRates(item) : {gov:0,market:0};
+  const rate = src==="gov" ? r.gov : r.market;
+  if(!bags || !rate){ box.textContent = "Bags ki tadaad daalo aur rate Admin se set karo."; return; }
+  box.textContent = `Total cost: ${fmt(bags*rate)}`;
+}
+
+/* =====================================================================
+   ADMIN — auth
+   ===================================================================== */
+const ADMIN_PASSWORD = "Khan123$$$"; // demo only — NOT secure, replace with real auth in production
+function tryAdminLogin(){
+  const val = document.getElementById("adminPass").value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById("adminGate").style.display = "none";
+    document.getElementById("adminPanel").style.display = "grid";
+    renderAdminAll();
+  } else {
+    document.getElementById("adminLoginMsg").style.color = "var(--up)";
+    document.getElementById("adminLoginMsg").textContent = "Galat password.";
+  }
+}
+function adminLogout(){
+  document.getElementById("adminGate").style.display = "block";
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("adminPass").value = "";
+}
+document.querySelectorAll(".admin-tabs button").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".admin-sub").forEach(s=>s.classList.remove("active"));
+    document.getElementById("sub-"+btn.dataset.sub).classList.add("active");
+  });
+});
+
+function renderAdminAll(){
+  document.getElementById("adminCityLabel").textContent = cityName(STATE.selectedCity);
+  document.getElementById("f-gov-city").textContent = cityName(STATE.selectedCity);
+  document.getElementById("f-market-city").textContent = cityName(STATE.selectedCity);
+  document.getElementById("th-gov").textContent = "Gov Rate (" + cityName(STATE.selectedCity) + ")";
+  document.getElementById("th-market").textContent = "Market Rate (" + cityName(STATE.selectedCity) + ")";
+  populateCatSelect();
+  renderAdminItems();
+  renderAdminCats();
+  renderAdminCities();
+  renderAdminHome();
+  renderAdminComments();
+  document.getElementById("catKeysHint").textContent = STATE.cats.map(c=>c.key).join(", ");
+  document.getElementById("adCodeInput").value = loadAdCodeStorage();
+}
+
+/* ----- Rates management ----- */
+function populateCatSelect(){
+  document.getElementById("f-cat").innerHTML = STATE.cats.map(c=>`<option value="${c.key}">${c.icon} ${c.name}</option>`).join("");
+}
+function renderAdminItems(){
+  document.getElementById("adminItemsBody").innerHTML = STATE.items.map(i=>{
+    const r = cityRates(i);
+    return `<tr>
+      <td>${i.name}</td><td>${catName(i.category)}</td>
+      <td class="mono">${fmt(r.gov)}</td><td class="mono">${fmt(r.market)}</td>
+      <td>${i.updated||"—"}</td><td>${i.enabled? "🟢 Enabled" : "⚪ Disabled"}</td>
+      <td class="row-actions"><button onclick="editItem('${i.id}')">Edit</button><button class="danger" onclick="deleteItem('${i.id}')">Delete</button></td>
+    </tr>`;
+  }).join("");
+}
+function editItem(id){
+  const i = STATE.items.find(x=>x.id===id);
+  if(!i) return;
+  const r = cityRates(i);
+  document.getElementById("f-id").value = i.id;
+  document.getElementById("f-name").value = i.name;
+  document.getElementById("f-cat").value = i.category;
+  document.getElementById("f-subcat").value = i.subcategory || "";
+  document.getElementById("f-unit").value = i.unit;
+  document.getElementById("f-gov").value = r.gov || "";
+  document.getElementById("f-market").value = r.market || "";
+  document.getElementById("f-source").value = i.source;
+  document.getElementById("f-featured").checked = !!i.featured;
+  document.getElementById("f-enabled").checked = !!i.enabled;
+  document.getElementById("itemFormTitle").textContent = "Item edit karo: " + i.name + " (" + cityName(STATE.selectedCity) + ")";
+  document.getElementById("cancelEditBtn").style.display = "inline-flex";
+  window.scrollTo({top:document.getElementById("sub-rates").offsetTop-20, behavior:"smooth"});
+}
+function cancelEdit(){
+  document.getElementById("f-id").value = "";
+  ["f-name","f-subcat","f-unit","f-gov","f-market","f-source"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("f-featured").checked = false;
+  document.getElementById("f-enabled").checked = true;
+  document.getElementById("itemFormTitle").textContent = "Naya item add karo";
+  document.getElementById("cancelEditBtn").style.display = "none";
+}
+function saveItem(){
+  const id = document.getElementById("f-id").value;
+  const name = document.getElementById("f-name").value.trim();
+  if(!name){ setMsg("itemFormMsg","Name zaroori hai.", true); return; }
+  const gov = parseFloat(document.getElementById("f-gov").value) || 0;
+  const market = parseFloat(document.getElementById("f-market").value) || 0;
+
+  if(id){
+    const idx = STATE.items.findIndex(x=>x.id===id);
+    const existing = STATE.items[idx];
+    existing.name = name;
+    existing.category = document.getElementById("f-cat").value;
+    existing.subcategory = document.getElementById("f-subcat").value.trim();
+    existing.unit = document.getElementById("f-unit").value.trim() || "/unit";
+    existing.source = document.getElementById("f-source").value.trim();
+    existing.updated = new Date().toISOString().slice(0,10);
+    existing.featured = document.getElementById("f-featured").checked;
+    existing.enabled = document.getElementById("f-enabled").checked;
+    if(!existing.rates) existing.rates = emptyRates();
+    existing.rates[STATE.selectedCity] = {gov, market};
+  } else {
+    const rates = {};
+    STATE.cities.forEach(c => rates[c.key] = {gov:0, market:0});
+    rates[STATE.selectedCity] = {gov, market};
+    STATE.items.push({
+      id: name.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+Date.now(),
+      name,
+      category: document.getElementById("f-cat").value,
+      subcategory: document.getElementById("f-subcat").value.trim(),
+      unit: document.getElementById("f-unit").value.trim() || "/unit",
+      rates,
+      source: document.getElementById("f-source").value.trim(),
+      updated: new Date().toISOString().slice(0,10),
+      featured: document.getElementById("f-featured").checked,
+      enabled: document.getElementById("f-enabled").checked,
+    });
+  }
+  saveItems(STATE.items);
+  cancelEdit();
+  renderAdminItems();
+  renderAdminHome();
+  refreshPublicViews();
+  setMsg("itemFormMsg","Save ho gaya ✅ (" + cityName(STATE.selectedCity) + " ke liye)");
+}
+function deleteItem(id){
+  if(!confirm("Pakka delete karna hai?")) return;
+  STATE.items = STATE.items.filter(x=>x.id!==id);
+  saveItems(STATE.items);
+  renderAdminItems();
+  renderAdminHome();
+  refreshPublicViews();
+}
+
+function bulkImport(){
+  const raw = document.getElementById("bulkInput").value.trim();
+  if(!raw){ setMsg("bulkMsg","Pehle kuch lines likho.", true); return; }
+  const lines = raw.split("\n").map(l=>l.trim()).filter(Boolean);
+  let added = 0, updated = 0, skipped = 0;
+  lines.forEach(line=>{
+    const parts = line.split(",").map(p=>p.trim());
+    const [name, category, subcategory, unit, govStr, marketStr, source] = parts;
+    if(!name || !category){ skipped++; return; }
+    if(!STATE.cats.some(c=>c.key===category)){ skipped++; return; }
+    const gov = parseFloat(govStr) || 0;
+    const market = parseFloat(marketStr) || 0;
+    const existing = STATE.items.find(i=>i.name.toLowerCase()===name.toLowerCase());
+    if(existing){
+      existing.category = category;
+      existing.subcategory = subcategory || "";
+      existing.unit = unit || existing.unit || "/unit";
+      if(!existing.rates) existing.rates = emptyRates();
+      existing.rates[STATE.selectedCity] = {gov, market};
+      existing.source = source || existing.source || "";
+      existing.updated = new Date().toISOString().slice(0,10);
+      updated++;
+    } else {
+      const rates = {};
+      STATE.cities.forEach(c => rates[c.key] = {gov:0, market:0});
+      rates[STATE.selectedCity] = {gov, market};
+      STATE.items.push({
+        id: name.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+Date.now()+Math.floor(Math.random()*1000),
+        name, category, subcategory: subcategory || "", unit: unit || "/unit",
+        rates, source: source || "", updated: new Date().toISOString().slice(0,10),
+        featured: false, enabled: true,
+      });
+      added++;
+    }
+  });
+  saveItems(STATE.items);
+  document.getElementById("bulkInput").value = "";
+  renderAdminItems();
+  renderAdminHome();
+  refreshPublicViews();
+  setMsg("bulkMsg", `✅ ${added} naye add, ${updated} update, ${skipped} skip (galat format/category).`);
+}
+
+/* ----- Categories ----- */
+function renderAdminCats(){
+  document.getElementById("adminCatsBody").innerHTML = STATE.cats.map(c=>{
+    const count = STATE.items.filter(i=>i.category===c.key).length;
+    return `<tr><td>${c.icon}</td><td>${c.name}</td><td class="mono">${c.key}</td><td>${count}</td>
+      <td class="row-actions"><button class="danger" onclick="deleteCategory('${c.key}')">Delete</button></td></tr>`;
+  }).join("");
+}
+function saveCategory(){
+  const icon = document.getElementById("c-icon").value.trim() || "📦";
+  const name = document.getElementById("c-name").value.trim();
+  const key = document.getElementById("c-key").value.trim().toLowerCase().replace(/\s+/g,"-");
+  if(!name || !key){ setMsg("catFormMsg","Name aur key zaroori hai.", true); return; }
+  if(STATE.cats.some(c=>c.key===key)){ setMsg("catFormMsg","Ye key pehle se maujood hai.", true); return; }
+  STATE.cats.push({key,icon,name});
+  saveCategories(STATE.cats);
+  document.getElementById("c-icon").value = ""; document.getElementById("c-name").value = ""; document.getElementById("c-key").value = "";
+  populateCatSelect(); renderAdminCats(); refreshPublicViews();
+  setMsg("catFormMsg","Category add ho gayi ✅");
+}
+function deleteCategory(key){
+  if(STATE.items.some(i=>i.category===key)){ alert("Pehle is category ke items delete ya move karo."); return; }
+  if(!confirm("Category delete karni hai?")) return;
+  STATE.cats = STATE.cats.filter(c=>c.key!==key);
+  saveCategories(STATE.cats);
+  populateCatSelect(); renderAdminCats(); refreshPublicViews();
+}
+
+/* ----- Cities ----- */
+function renderAdminCities(){
+  document.getElementById("adminCitiesBody").innerHTML = STATE.cities.map(c=>
+    `<tr><td>${c.name}</td><td class="mono">${c.key}</td>
+      <td class="row-actions"><button class="danger" onclick="deleteCity('${c.key}')">Delete</button></td></tr>`).join("");
+}
+function saveCity(){
+  const name = document.getElementById("ct-name").value.trim();
+  const key = document.getElementById("ct-key").value.trim().toLowerCase().replace(/\s+/g,"-");
+  if(!name || !key){ setMsg("cityFormMsg","Name aur key zaroori hai.", true); return; }
+  if(STATE.cities.some(c=>c.key===key)){ setMsg("cityFormMsg","Ye city pehle se maujood hai.", true); return; }
+  STATE.cities.push({key,name});
+  saveCities(STATE.cities);
+  STATE.items.forEach(i=>{ if(!i.rates) i.rates={}; if(!i.rates[key]) i.rates[key]={gov:0,market:0}; });
+  saveItems(STATE.items);
+  document.getElementById("ct-name").value = ""; document.getElementById("ct-key").value = "";
+  renderCitySelect(); renderAdminCities();
+  setMsg("cityFormMsg","City add ho gayi ✅");
+}
+function deleteCity(key){
+  if(STATE.cities.length<=1){ alert("Kam se kam ek city zaroori hai."); return; }
+  if(!confirm("City delete karni hai? Uski rates bhi remove ho jayengi.")) return;
+  STATE.cities = STATE.cities.filter(c=>c.key!==key);
+  saveCities(STATE.cities);
+  STATE.items.forEach(i=>{ if(i.rates) delete i.rates[key]; });
+  saveItems(STATE.items);
+  if(STATE.selectedCity===key){ STATE.selectedCity = STATE.cities[0].key; saveSelectedCity(STATE.selectedCity); }
+  renderCitySelect(); renderAdminAll(); refreshPublicViews();
+}
+
+/* ----- Homepage ----- */
+function renderAdminHome(){
+  document.getElementById("adminHomeBody").innerHTML = STATE.items.map(i=>
+    `<tr><td>${i.name}</td><td>${catName(i.category)}</td>
+      <td><input type="checkbox" ${i.featured?"checked":""} onchange="toggleFeatured('${i.id}', this.checked)"></td></tr>`).join("");
+}
+function toggleFeatured(id, val){
+  const item = STATE.items.find(i=>i.id===id);
+  if(item){ item.featured = val; saveItems(STATE.items); refreshPublicViews(); }
+}
+
+/* ----- Comments moderation ----- */
+function renderAdminComments(){
+  document.getElementById("adminCommentsBody").innerHTML = STATE.comments.slice().reverse().map(c=>{
+    const item = STATE.items.find(i=>i.id===c.itemId);
+    return `<tr><td>${c.name||"Anonymous"}</td><td>${item?item.name:c.itemId}</td><td>${cityName(c.city)}</td>
+      <td>${c.rate?fmt(c.rate):"—"}</td><td>${escapeHtml(c.text).slice(0,60)}</td>
+      <td class="row-actions"><button class="danger" onclick="deleteComment('${c.id}')">Delete</button></td></tr>`;
+  }).join("") || `<tr><td colspan="6" style="color:var(--ink-soft);">Koi comment nahi.</td></tr>`;
+}
+function deleteComment(id){
+  STATE.comments = STATE.comments.filter(c=>c.id!==id);
+  saveComments(STATE.comments);
+  renderAdminComments();
+  renderComments();
+}
+
+/* ----- AI assistant ----- */
+let aiProposal = null;
+function runAiAssistant(){
+  const text = document.getElementById("aiInput").value.trim();
+  const area = document.getElementById("aiPendingArea");
+  if(!text){ area.innerHTML = ""; return; }
+  const numMatch = text.match(/(\d+(\.\d+)?)/);
+  const found = STATE.items.find(i => text.toLowerCase().includes(i.name.toLowerCase()));
+  if(!found || !numMatch){
+    area.innerHTML = `<div class="ai-pending">❌ Samajh nahi aaya. Item ka naam aur number clearly likho, jaise: "Petrol 278 update karo".<br><em>Koi live official source connected nahi hai, isliye main koi rate khud se invent nahi kar sakta.</em></div>`;
+    return;
+  }
+  aiProposal = {id: found.id, newRate: parseFloat(numMatch[1])};
+  const r = cityRates(found);
+  area.innerHTML = `<div class="ai-pending">
+    <strong>Proposed change (${cityName(STATE.selectedCity)}):</strong> ${found.name} — government rate ${fmt(r.gov)} → <strong>${fmt(aiProposal.newRate)}</strong>
+    <br><span style="color:var(--ink-soft);">⚠️ Ye sirf tumhari request se bana proposal hai — kisi official source se verify nahi hua.</span>
+    <div class="approve-row">
+      <button class="go" onclick="approveAiProposal()">✅ Approve &amp; Apply</button>
+      <button onclick="aiProposal=null; document.getElementById('aiPendingArea').innerHTML='';">✖ Reject</button>
+    </div>
+  </div>`;
+}
+function approveAiProposal(){
+  if(!aiProposal) return;
+  const item = STATE.items.find(i=>i.id===aiProposal.id);
+  if(item){
+    if(!item.rates) item.rates = emptyRates();
+    if(!item.rates[STATE.selectedCity]) item.rates[STATE.selectedCity] = {gov:0,market:0};
+    item.rates[STATE.selectedCity].gov = aiProposal.newRate;
+    item.updated = new Date().toISOString().slice(0,10);
+    saveItems(STATE.items);
+    renderAdminItems(); renderAdminHome(); refreshPublicViews();
+  }
+  document.getElementById("aiPendingArea").innerHTML = `<div class="ai-pending">✅ Update ho gaya.</div>`;
+  document.getElementById("aiInput").value = "";
+  aiProposal = null;
+}
+function checkAllRates(){
+  const area = document.getElementById("aiPendingArea");
+  const rows = STATE.items.map(i=>{
+    const r = cityRates(i);
+    return `<tr><td>${i.name}</td><td>${fmt(r.gov)}</td><td>${i.source||"—"}</td><td>${i.updated||"—"}</td><td>⚠️ Unverified</td></tr>`;
+  }).join("");
+  area.innerHTML = `<div class="ai-pending">
+    <strong>Status (${cityName(STATE.selectedCity)}):</strong> Koi live official source connect nahi hai, isliye har item "Unverified" hai.
+    <table class="admin-table" style="margin-top:10px;"><thead><tr><th>Item</th><th>Saved Rate</th><th>Source</th><th>Last Updated</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>`;
+}
+
+function exportData(){
+  const backup = {
+    categories: STATE.cats, items: STATE.items, cities: STATE.cities,
+    comments: STATE.comments, adCode: loadAdCodeStorage(), exportedAt: new Date().toISOString(),
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `ratedost-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  setMsg("exportMsg","Backup download ho gayi ✅");
+}
+function importData(){
+  const fileInput = document.getElementById("importFile");
+  const file = fileInput.files[0];
+  if(!file){ setMsg("importMsg","Pehle backup file chuno.", true); return; }
+  if(!confirm("Ye current data ko overwrite kar dega. Pakka aage badhna hai?")) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.items || !data.categories || !data.cities){ setMsg("importMsg","Ye valid RateDost backup file nahi lagti.", true); return; }
+      STATE.cats = data.categories; STATE.items = data.items; STATE.cities = data.cities;
+      STATE.comments = data.comments || [];
+      saveCategories(STATE.cats); saveItems(STATE.items); saveCities(STATE.cities); saveComments(STATE.comments);
+      if(data.adCode) saveAdCodeStorage(data.adCode);
+      if(!STATE.cities.some(c=>c.key===STATE.selectedCity)) STATE.selectedCity = STATE.cities[0].key;
+      saveSelectedCity(STATE.selectedCity);
+      renderCitySelect(); renderAdminAll(); refreshPublicViews();
+      setMsg("importMsg","Backup restore ho gayi ✅");
+    } catch(err){ setMsg("importMsg","File parse nahi ho saki — sahi .json file chuno.", true); }
+  };
+  reader.readAsText(file);
+}
+
+function setMsg(id, text, isError){
+  const el = document.getElementById(id);
+  el.style.color = isError ? "var(--up)" : "var(--green)";
+  el.textContent = text;
+  setTimeout(()=>{ el.textContent=""; }, 3500);
+}
+
+function renderAdSlots(){
+  const code = loadAdCodeStorage();
+  const html = code.trim()
+    ? `<div class="ad-slot-label">Sponsored</div>${code}`
+    : `<div class="ad-slot-label">Sponsored</div><div class="ad-placeholder">Ad space abhi khaali hai — Admin → Earnings se apna ad/sponsor code laga sakte ho.</div>`;
+  const homeSlot = document.getElementById("adSlotHome");
+  const marketSlot = document.getElementById("adSlotMarket");
+  if(homeSlot) homeSlot.innerHTML = html;
+  if(marketSlot) marketSlot.innerHTML = html;
+}
+function saveAdCode(){
+  const code = document.getElementById("adCodeInput").value;
+  saveAdCodeStorage(code);
+  renderAdSlots();
+  setMsg("adCodeMsg","Ad code save ho gaya ✅");
+}
+
+/* =====================================================================
+   REFRESH EVERYTHING
+   ===================================================================== */
+function refreshPublicViews(){
+  renderTicker();
+  renderHome(document.getElementById("homeSearch").value);
+  renderGovCategories();
+  renderMarket(document.getElementById("marketSearch").value);
+  renderAdSlots();
+}
+renderCitySelect();
+refreshPublicViews();
+</script>
+</body>
+</html>
