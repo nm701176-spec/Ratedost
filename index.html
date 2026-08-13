@@ -1,143 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur-PK">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RateDost - Official & Market Rates</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-    .navbar {
-      background: #ffffff;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e2e8f0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .logo {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #0369a1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .nav-links button {
-      background: transparent;
-      border: none;
-      color: #475569;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    .nav-links button:hover {
-      background: #e0f2fe;
-      color: #0369a1;
-    }
-    .nav-links button.active {
-      background: #0284c7;
-      color: #ffffff;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px 16px;
-    }
-    .page { display: none; }
-    .page.active { display: block; }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 8px;
-      color: #0f172a;
-    }
-    h2 {
-      font-size: 1.25rem;
-      margin: 20px 0 12px;
-      color: #1e293b;
-    }
-    .note {
-      background: #e0f2fe;
-      border-left: 4px solid #0284c7;
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-      color: #0c4a6e;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-    .card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 10px;
-      color: #0f172a;
-    }
-    .rate-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 6px 0;
-      font-size: 0.95rem;
-    }
-    .label { color: #64748b; }
-    .value { font-weight: 600; color: #1e293b; }
-    .status {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .up { background: #dcfce7; color: #166534; }
-    .down { background: #fee2e2; color: #991b1b; }
-    .same { background: #f1f5f9; color: #475569; }
-    .last-updated {
-      font-size: 0.8rem;
-      color: #94a3b8;
-      margin-top: 8px;
-    }
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .cat-btn {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      color: #334155;
-      padding: 14px 10px;
-      border-radius: 10px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RateDost — Pakistan ke har shehar ke official government rates aur market rates, ek jagah. Farq check karo, calculators use karo.">
+<meta name="theme-color" content="#0B5D39">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22RateDost%22%2C%22short_name%22%3A%22RateDost%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F6F3EA%22%2C%22theme_color%22%3A%22%230B5D39%22%7D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B5D39'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23F3E6BC' font-family='Georgia,serif'%3ER%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="RateDost — Government & Market Rates">
+<meta property="og:description" content="Pakistan ke har shehar ke official aur market rates, ek jagah.">
+<meta property="og:type" content="website">
+<title>RateDost — Government &amp; Market Rates, Ek Jagah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F3EA; --paper:#FFFFFF; --ink:#132A1E; --ink-soft:#4A5750;
+    --green:#0B5D39; --green-dark:#083E27; --green-tint:#E7EFE9;
+    --gold:#B8901F; --gold-light:#F3E6BC; --up:#A6382B; --down:#0B5D39;
+    --line:#E1DACB; --radius:14px;
+    --shadow:0 1px 2px rgba(19,42,30,.06), 0 8px 24px -12px rgba(19,42,30,.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans', system-ui, sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Fraunces', serif;font-weight:600;letter-spacing:-.01em;margin:0;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ::selection{background:var(--gold-light);}
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--green);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:200;}
+  .skip-link:focus{left:0;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
+  header.site{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:1px solid var(--line);}
+  .header-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(155deg,var(--green),var(--green-dark));display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-family:'Fraunces',serif;font-weight:700;font-size:18px;flex:none;}
+  .brand-text .name{font-family:'Fraunces',serif;font-weight:700;font-size:20px;line-height:1;}
+  .brand-text .tag{font-size:11px;color:var(--ink-soft);letter-spacing:.03em;}
+  .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .city-select{
+    display:flex;align-items:center;gap:6px;background:var(--green-tint);border:1px solid var(--line);
+    border-radius:999px;padding:6px 12px;font-size:13px;
+  }
+  .city-select select{border:none;background:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--green-dark);outline:none;}
+  nav.main{display:flex;gap:4px;flex-wrap:wrap;}
+  nav.main button{background:none;border:none;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;gap:6px;transition:background .15s,color .15s;}
+  nav.main button:hover{background:var(--green-tint);color:var
