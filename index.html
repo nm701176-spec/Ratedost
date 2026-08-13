@@ -225,9 +225,6 @@
 
   <!-- ===================== HOME ===================== -->
   <section class="view active" id="view-home">
-    <div class="demo-banner">
-      ⚠️ <div><strong>Demo data:</strong> Ye rates sample/placeholder hain, live sarkari values nahi. Real official rates ke liye Admin panel se update karo ya backend API jodo.</div>
-    </div>
     <p class="current-city-note">Rates dikhaye ja rahe hain: <strong id="homeCityLabel">—</strong> ke liye. Upar se city badal sakte ho.</p>
 
     <div class="hero">
@@ -282,4 +279,6 @@
       <p style="font-size:13px;color:var(--ink-soft);margin:0 0 16px;">Ye sab <strong>unverified user reports</strong> hain — RateDost inko official rate nahi maanta, sirf ek aam raaye ke tor par dikhata hai.</p>
 
       <div class="comment-form">
-        <div cl
+        <div class="form-grid">
+          <div class="field"><label>Aapka naam (optional)</label><input type="text" id="cm-name" placeholder="e.g. Ahmed"></div>
+          <div class="field"><label>Item</label><select id="cm-item"></select><
